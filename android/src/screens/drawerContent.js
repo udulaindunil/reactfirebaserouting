@@ -25,6 +25,7 @@ export function DrawerContent(props){
     const toggleTheme =()=>{
         setIsDarkTheme(!isDarkTheme);
     }
+    const paperTheme = useTheme();
 
     return(
         <View style={{flex:1}}>
@@ -136,7 +137,7 @@ export function DrawerContent(props){
                                 <View pointerEvents="none">
 
                                 </View>
-                                <Switch />
+                                <Switch value={paperTheme.dark}/>
                             </View>
                         </TouchableRipple>
 
