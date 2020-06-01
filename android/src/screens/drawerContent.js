@@ -1,6 +1,7 @@
 import React from 'react';
 import {View,StyleSheet} from 'react-native';
 import {
+    useTheme,
     Avatar,
     Title,
     Caption,
@@ -103,7 +104,7 @@ export function DrawerContent(props){
                                 />
                             )}
                             label="Bookmarks"
-                            onPress={() => {props.navigation.navigate('Home')}}
+                            onPress={() => {props.navigation.navigate('BookMarkScreen')}}
                         />      
 
                         <DrawerItem 
@@ -115,7 +116,7 @@ export function DrawerContent(props){
                                 />
                             )}
                             label="Settings"
-                            onPress={() => {props.navigation.navigate('Home')}}
+                            onPress={() => {props.navigation.navigate('SettingsScreen')}}
                         />
 
                         <DrawerItem 
@@ -127,7 +128,7 @@ export function DrawerContent(props){
                                 />
                             )}
                             label="Support"
-                            onPress={() => {props.navigation.navigate('Home')}}
+                            onPress={() => {props.navigation.navigate('SupportScreen')}}
                         />
                     </Drawer.Section>
                     <Drawer.Section title="Preferences">

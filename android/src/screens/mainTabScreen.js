@@ -21,7 +21,7 @@ const MainTabsScreen = ()=>{
         style={{ backgroundColor: 'tomato' }}
       >
         <Tab.Screen
-          name="HomeScreen"
+          name="Home"
           component={homeStackScreen}
           options={{
             tabBarLabel: 'Home',
@@ -33,7 +33,7 @@ const MainTabsScreen = ()=>{
         />
 
         <Tab.Screen
-          name="DetailsScreen"
+          name="Details"
           component={detailsStackScreen}
           options={{
             tabBarLabel: 'Details',
@@ -44,7 +44,7 @@ const MainTabsScreen = ()=>{
           }}
         />
         <Tab.Screen
-          name="ProfileScreen"
+          name="Profile"
           component={profileStackScreen}
           options={{
             tabBarLabel: 'Profile',
@@ -56,7 +56,7 @@ const MainTabsScreen = ()=>{
         />
 
         <Tab.Screen
-          name="ExploreScreen"
+          name="Explore"
           component={exploreStackScreen}
           options={{
             tabBarLabel: 'Explore',
