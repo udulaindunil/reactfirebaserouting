@@ -14,18 +14,21 @@ import DrawerContent from './android/src/screens/drawerContent';
 import SupportScreen from './android/src/screens/supportScreen';
 import SettingsScreen from './android/src/screens/settingsScreen';
 import BookMarkScreen from './android/src/screens/boockMarkScreen';
-const Drawer = createDrawerNavigator();
+import RootStackScreen from './android/src/screens/rootStackScreen';
+
+// const Drawer = createDrawerNavigator();
 
 function App() {
   return (
-    <NavigationContainer>   
-
-      <Drawer.Navigator drawerContent={props=><DrawerContent{...props}/>}>
+    <NavigationContainer>
+      <RootStackScreen/>
+       
+      {/* <Drawer.Navigator drawerContent={props=><DrawerContent{...props}/>}>
           <Drawer.Screen name="HomeDrawer" component={MainTabsScreen} />
           <Drawer.Screen name="SupportScreen" component={SupportScreen} />
           <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
           <Drawer.Screen name="BookMarkScreen" component={BookMarkScreen} />
-      </Drawer.Navigator>
+      </Drawer.Navigator> */}
     
     </NavigationContainer>
   );
