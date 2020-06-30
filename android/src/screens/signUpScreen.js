@@ -25,6 +25,7 @@ import {AuthContext} from '../../../components/context'
 
 const SignUpScreen = ({navigation})=>{
 
+    const {signUp} = React.useContext(AuthContext);
 
     const [data, setData] = React.useState({
         username: '',
@@ -77,6 +78,10 @@ const SignUpScreen = ({navigation})=>{
             ...data,
             confirm_secureTextEntry: !data.confirm_secureTextEntry
         });
+    }
+
+    const signInHandle=(username,password)=>{
+        signUp(username,password)
     }
 
         return (
@@ -189,16 +194,21 @@ const SignUpScreen = ({navigation})=>{
                     {/* buttons here is */}
                     <View style={styles.button}>
                         
-                        <LinearGradient
-                            colors={['#08d4c4', '#01ab9d']}
+                    <TouchableOpacity
                             style={styles.signIn}
+                            onPress={()=>{signInHandle(data.username,data.password)}}
                         >
-                           <Text    style={[styles.textSign, {
-                                    color:'#fff'
-                                    }]}>
-                                        Sign Up
-                            </Text>
-                        </LinearGradient>
+                                <LinearGradient
+                                    colors={['#08d4c4', '#01ab9d']}
+                                    style={styles.signIn}
+                                    >
+                                    <Text    
+                                        style={[styles.textSign, {color:'#fff'}]}>
+                                                Sign Up
+                                    </Text>
+                                </LinearGradient>
+                        </TouchableOpacity>
+
                         <TouchableOpacity
                             onPress={()=> navigation.navigate('SignInScreen')}
                             style={[styles.signIn, {

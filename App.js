@@ -18,6 +18,9 @@ import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import { ActivityIndicator } from 'react-native-paper';
 import {AuthContext } from './components/context'
+
+import auth from '@react-native-firebase/auth';
+
 const Drawer = createDrawerNavigator();
 
 function App() {
@@ -27,8 +30,8 @@ function App() {
 
   const initialLoginState={
     isLoading:true,
-    userName : null,
-    userToken : null,
+    userEmail : null,
+    userId : null,
   }
 
   const loginReducer =(prevState,action)=>{
@@ -36,15 +39,23 @@ function App() {
       case 'RETRIVE_TOKEN':
         return{
           ...prevState,
-          userToken: action.token,
+          userId: action.uid,
           isLoading : false,
         };
 
-      case 'LOGIN':
+      case 'SIGNIN':
         return{
           ...prevState,
-          userName: action.id,
-          userToken: action.token,
+          userEmail: action.email,
+          userId: action.uid,
+          isLoading : false,
+        };
+
+      case 'SIGNUP':
+        return{
+          ...prevState,
+          userEmail: action.email,
+          userId: action.uid,
           isLoading : false,
         };
 
@@ -52,8 +63,8 @@ function App() {
         return{
           ...prevState,
 
-          userName: null,
-          userToken: null,
+          userEmail: null,
+          userId: null,
           isLoading : false,
         };
       
@@ -71,32 +82,44 @@ function App() {
 
 
   const authContext = React.useMemo(()=>({
-    signIn:(userName,password)=>{
+    signIn:(email,password)=>{
       let userToken;
       userToken= null;
-      if(userName =='user' && password == 'pass'){
-        userToken = 'jsjsd';
-      }
-
-      console.log(userToken,"user token");
+      auth().signInWithEmailAndPassword(email,password).then((res)=>{
+        console.log("sign with user in firebase");
+        dispatch({type:'SIGNIN',email: res.user.email, uid :res.user.uid});
+      },error=>{
+        console.log(error);
+      })
       
-      dispatch({type:'LOGIN',id: userName, token :userToken});
     },
     signOut:()=>{
+      auth().signOut().then(() => {
+        console.log('User signed out!');
+        dispatch({type:'LOGOUT'});
+    },error=>{
       dispatch({type:'LOGOUT'});
+      console.log(error);
+    });
     },
-    signUp:()=>{
-      setUserToken('sjdcjbsdc');
-      setIsLoading(false);
+    signUp:(email,password)=>{
+
+      auth().createUserWithEmailAndPassword(email,password).then((res)=>{
+        console.log("user created");
+        console.log(res.user.email);
+        dispatch({type:'SIGNUP',email: res.user.email, uid :res.user.uid});
+      },error=>{
+        console.log(error);
+      })
     }
   }));
 
   useEffect(() => {
     setTimeout(()=>{
       // setIsLoading(false);
-      let userToken;
-      userToken ='ajsbxjasb'
-      dispatch({type:'RETRIVE_TOKEN', token :userToken});
+      let userId;
+      userId = null
+      dispatch({type:'RETRIVE_TOKEN', uid :userId});
     },1000);
   }, []);
 
@@ -113,7 +136,7 @@ function App() {
 
     <AuthContext.Provider value={authContext}>
               <NavigationContainer>
-                {loginState.userToken !== null ?(
+                {loginState.userId !== null ?(
                 <Drawer.Navigator drawerContent={props=><DrawerContent{...props}/>}>
                     <Drawer.Screen name="HomeDrawer" component={MainTabsScreen} />
                     <Drawer.Screen name="SupportScreen" component={SupportScreen} />
