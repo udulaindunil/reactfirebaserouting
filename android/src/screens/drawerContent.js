@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {View,StyleSheet} from 'react-native';
 import {
     useTheme,
@@ -20,17 +20,26 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons' 
 import { floor } from 'react-native-reanimated';
 import {AuthContext} from '../../../components/context'
+import auth from '@react-native-firebase/auth';
+import User from '@react-native-firebase/app'
 
 export function DrawerContent(props){
 
     const [isDarkTheme, setIsDarkTheme] = React.useState(false);
-    
     const {signOut} = React.useContext(AuthContext);
-   
     const toggleTheme =()=>{
         setIsDarkTheme(!isDarkTheme);
     }
     const paperTheme = useTheme();
+
+
+    //for firbase user here
+    const [userEmail, setEmail] = useState();
+    const [firebaseUser,setFirebaseUser] = useState();
+
+    useEffect(() => {
+        setEmail(auth().currentUser.email);
+    }, []);
 
     return(
         <View style={{flex:1}}>
@@ -39,12 +48,12 @@ export function DrawerContent(props){
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image source={{
-                                uri: 'https://scontent.fcmb10-1.fna.fbcdn.net/v/t1.0-9/83548262_2225886281048391_8833482001009868800_n.jpg?_nc_cat=106&_nc_sid=09cbfe&_nc_ohc=uZLyz4PhJZsAX_MVAmE&_nc_ht=scontent.fcmb10-1.fna&oh=a3ea5805e66e773c46e03d84005d778c&oe=5EF9CC3E'
+                                // uri: 'https://scontent.fcmb10-1.fna.fbcdn.net/v/t1.0-9/83548262_2225886281048391_8833482001009868800_n.jpg?_nc_cat=106&_nc_sid=09cbfe&_nc_ohc=uZLyz4PhJZsAX_MVAmE&_nc_ht=scontent.fcmb10-1.fna&oh=a3ea5805e66e773c46e03d84005d778c&oe=5EF9CC3E'
                             }}
                             size={50}/>
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>
-                                    Udula Indunil
+                                    {userEmail}
                                 </Title>
                                 <Caption style={styles.caption}>@_Uae
 
@@ -107,7 +116,7 @@ export function DrawerContent(props){
                                 size={size}
                                 />
                             )}
-                            label="Bookmarks"
+                            label="To Dos"
                             onPress={() => {props.navigation.navigate('BookMarkScreen')}}
                         />      
 

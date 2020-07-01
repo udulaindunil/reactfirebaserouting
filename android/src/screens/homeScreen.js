@@ -13,16 +13,7 @@ import {
 
 HomeScreen = ({navigation})=> {
   return (
-         <View style={styles.a}>
-          <Text style={styles.b}>
-                 HomeScreen
-          </Text>
-
-          <Button 
-            title="Go to details screen"
-            onPress={() => navigation.navigate("Details")}
-           />
-            
+         <View style={styles.a}>           
           </View>
   );
 };

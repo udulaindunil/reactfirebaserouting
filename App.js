@@ -14,6 +14,7 @@ import DrawerContent from './android/src/screens/drawerContent';
 import SupportScreen from './android/src/screens/supportScreen';
 import SettingsScreen from './android/src/screens/settingsScreen';
 import BookMarkScreen from './android/src/screens/boockMarkScreen';
+import ToDoScreen from './android/src/screens/todoScreen';
 import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import { ActivityIndicator } from 'react-native-paper';
@@ -24,9 +25,6 @@ import auth from '@react-native-firebase/auth';
 const Drawer = createDrawerNavigator();
 
 function App() {
-
-  // const [isLoading,setIsLoading] = React.useState(true);
-  // const [userToken,setUserToken] = React.useState(null);
 
   const initialLoginState={
     isLoading:true,
@@ -116,10 +114,14 @@ function App() {
 
   useEffect(() => {
     setTimeout(()=>{
+
+      // for testing 
+
+      authContext.signIn('udulaindunil@gmail.com','123456')
       // setIsLoading(false);
-      let userId;
-      userId = null
-      dispatch({type:'RETRIVE_TOKEN', uid :userId});
+      // let userId;
+      // userId = null
+      // dispatch({type:'RETRIVE_TOKEN', uid :userId});
     },1000);
   }, []);
 
@@ -138,12 +140,11 @@ function App() {
               <NavigationContainer>
                 {loginState.userId !== null ?(
                 <Drawer.Navigator drawerContent={props=><DrawerContent{...props}/>}>
-                    <Drawer.Screen name="HomeDrawer" component={MainTabsScreen} />
+                    <Drawer.Screen name="HomeDrawer" component={MainTabsScreen}  />
                     <Drawer.Screen name="SupportScreen" component={SupportScreen} />
                     <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-                    <Drawer.Screen name="BookMarkScreen" component={BookMarkScreen} />
+                    <Drawer.Screen name="BookMarkScreen" component={BookMarkScreen}  initialParams={{ userId: loginState.userId}}/>
                   </Drawer.Navigator>
-
                 ):<RootStackScreen/>}
               </NavigationContainer>
         </AuthContext.Provider>
