@@ -14,7 +14,6 @@ import DrawerContent from './android/src/screens/drawerContent';
 import SupportScreen from './android/src/screens/supportScreen';
 import SettingsScreen from './android/src/screens/settingsScreen';
 import BookMarkScreen from './android/src/screens/boockMarkScreen';
-import ToDoScreen from './android/src/screens/todoScreen';
 import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import { ActivityIndicator } from 'react-native-paper';
