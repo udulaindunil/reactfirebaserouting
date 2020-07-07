@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -9,10 +9,13 @@ import {
 } from 'react-native';
 
 import firestore from "@react-native-firebase/firestore"
+import { UserDetails } from '../../../components/userDetailsContext';
 
 
 
 HomeScreen = ({navigation})=> {
+
+  const x = useContext(UserDetails)
 
   const [notices,setNotices] = useState()
 
@@ -23,7 +26,7 @@ HomeScreen = ({navigation})=> {
           notices.push({
                 ... documentSnapshot.data(),
                 key: documentSnapshot.id,
-            });
+            });            
         });
         setNotices(notices);
     });

@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState} from 'react'
+import {Picker} from '@react-native-community/picker';
 import {
     View,
     Text,
@@ -26,6 +27,9 @@ import {AuthContext} from '../../../components/context'
 const SignUpScreen = ({navigation})=>{
 
     const {signUp} = React.useContext(AuthContext);
+
+    const [role, setRole] = useState('')
+
 
     const [data, setData] = React.useState({
         username: '',
@@ -58,7 +62,8 @@ const SignUpScreen = ({navigation})=>{
             password: val
         });
     }
-    const handleConfirmPasswordChange = (val) => {
+
+     const handleConfirmPasswordChange = (val) => {
         setData({
             ...data,
             confirm_password: val
@@ -80,8 +85,8 @@ const SignUpScreen = ({navigation})=>{
         });
     }
 
-    const signInHandle=(username,password)=>{
-        signUp(username,password)
+    const signInHandle=(username,password,role)=>{
+        signUp(username,password,role)
     }
 
         return (
@@ -191,12 +196,32 @@ const SignUpScreen = ({navigation})=>{
                      </TouchableOpacity>
                     </View>
 
+
+
+
+                    <Text style={[styles.text_footer,{marginTop:25,marginBottom:10}]}>
+                            Your Role
+                    </Text>
+
+                    <View>
+                    <Picker
+                            selectedValue={role}
+                            style={{height: 50, width: '100%'},styles.textInput}
+                            onValueChange={(val)=>{setRole(val);
+                            console.log(val);
+                            }}>
+                            <Picker.Item label={'Select your role'} value={''} />
+                            <Picker.Item label={'Admin'} value={'admin'} />
+                            <Picker.Item label={'Staff'} value={'staff'} />
+                            </Picker>
+                    </View>                    
+
                     {/* buttons here is */}
                     <View style={styles.button}>
                         
                     <TouchableOpacity
                             style={styles.signIn}
-                            onPress={()=>{signInHandle(data.username,data.password)}}
+                            onPress={()=>{signInHandle(data.username,data.password,role)}}
                         >
                                 <LinearGradient
                                     colors={['#08d4c4', '#01ab9d']}
@@ -260,7 +285,7 @@ const styles = StyleSheet.create({
     },
     text_footer: {
         color: '#05375a',
-        fontSize: 18
+        fontSize: 16
     },
     action: {
         flexDirection: 'row',
