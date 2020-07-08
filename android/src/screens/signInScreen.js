@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import {
     View,
     Text,
@@ -20,12 +20,14 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { color } from 'react-native-reanimated';
-import {AuthContext} from '../../../components/context'
+import {AuthContext} from '../../../components/context';
+
 const SignInScreen = ({navigation})=>{
 
 
-
+    // const userDetails = useContext(UserDetails);
     const {signIn} = React.useContext(AuthContext);
+
 
 
     const [data, setData] = React.useState({
@@ -76,7 +78,14 @@ const SignInScreen = ({navigation})=>{
     }
 
     const loginHandle=(username,password)=>{
-        signIn(username,password)
+        if(username.length>3 && password.length>5){
+            signIn(username,password)
+        }  else{
+            Alert.alert('Opps!','Invalid details',[
+                {text:'Try again', onPress:()=>console.log("alrert closed")
+                }
+            ])
+        }
     }
 
         return (

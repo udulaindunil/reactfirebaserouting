@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState ,useContext} from 'react'
 import {Picker} from '@react-native-community/picker';
 import {
     View,
@@ -27,6 +27,10 @@ import {AuthContext} from '../../../components/context'
 const SignUpScreen = ({navigation})=>{
 
     const {signUp} = React.useContext(AuthContext);
+    
+
+   
+    
 
     const [role, setRole] = useState('')
 
@@ -123,7 +127,14 @@ const SignUpScreen = ({navigation})=>{
     }
 
     const signInHandle=(name,profileImage,username,email,password,role)=>{
-        signUp(name,profileImage,username,email,password,role)
+        if(name.length>3 && username.length>3 && email.length>3 && password.length>5 && (role=='admin' || role=='staff')){
+            signUp(name,profileImage,username,email,password,role)
+        }else{
+            Alert.alert('Opps!','Invalid details',[
+                {text:'Try again', onPress:()=>console.log("alrert closed")
+                }
+            ])
+        }
     }
 
         return (

@@ -6,7 +6,9 @@ import {
   Button,
   TouchableOpacity,
   TextInput,
-  Alert
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
@@ -25,6 +27,7 @@ AddNoticeScreen = ({navigation})=> {
   const [response,setResponse] = useState('')
 
   function publishNotice(){
+    if(notice.length > 4){
     var ts = new Date();
     console.log(ts.toISOString());
     var date = ts.toISOString();
@@ -41,22 +44,28 @@ AddNoticeScreen = ({navigation})=> {
     
     setTimeout(()=>{
       setResponse('Notice added!');
-    },1000)
+    },1000);
   },error=>{
     Alert.alert('oops!','Something went wrong',
     [{text:'understodd',onPress:()=> console.log('alert closed')
     }])
   });
-  
+}else{
+  Alert.alert('Opps!','Notice should be over 4 characters long',[
+      {text:'Unserstood', onPress:()=>console.log("alrert closed")
+      }
+  ])
+}
 }
 
   return (
+    <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
+
+   
          <View style={styles.container}>
-           <View style={styles.header}>
-                <Text style={styles.text_header}>
-                  Add New Notice
-                </Text>
-           </View>
+              <View style={styles.header}>
+                  <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update Notices</Text>
+              </View>
 
           <View style={styles.noteInput}>
           <Text style={styles.text_footer}>
@@ -70,16 +79,18 @@ AddNoticeScreen = ({navigation})=> {
                         <TextInput
                             multiline={true}
                             numberOfLines={12}
-                            placeholder="Your Email"
+                            placeholder="Your Notice"
                             style={styles.textInput}
                             autoCapitalize="none"
                             onChangeText={(val) => setNotice(val)}
                             />
 
           </View>
+          <View style={{alignContent:"center"}}>
+            <Text style={{color:'green',textAlign:"center"}}>{response}</Text>
+          </View>
           
           </View>
-
                         <View style={styles.butonSet}>
 
                                   <TouchableOpacity
@@ -106,7 +117,7 @@ AddNoticeScreen = ({navigation})=> {
                                               style={styles.signIn}
                                               >
                                               <Text    
-                                                  style={[styles.textSign, {color:'#fff',size:16}]}>
+                                                  style={[styles.textSign, {color:'#fff'}]}>
                                                         Home
                                               </Text>
                                           </LinearGradient>
@@ -115,6 +126,7 @@ AddNoticeScreen = ({navigation})=> {
                         </View>
             
           </View>
+      </TouchableWithoutFeedback>
   );
 };
 
@@ -169,7 +181,7 @@ const styles = StyleSheet.create({
   },
 
   noteInput:{
-    marginTop: '20%',
+    marginTop: '15%',
     padding:'8%',
   },
   errorMsg: {

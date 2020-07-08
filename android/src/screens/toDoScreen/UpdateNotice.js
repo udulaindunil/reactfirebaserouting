@@ -6,7 +6,9 @@ import {
   Button,
   TouchableOpacity,
   TextInput,
-  Alert
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
@@ -28,34 +30,43 @@ UpdateNoticeScreen = ({navigation,route})=> {
       }, []);
 
   function publishNotice(){
-    var ts = new Date();
-    console.log(ts.toISOString());
-    var date = ts.toISOString();
-    console.log(notice);
-    
-    usersCollection.doc(id).update({ 
-    notice: notice,
-    date: date,
-    role: userDetails.role,
-    uid: userDetails.userId,
-    author: userDetails.name,
-    state: "active",
-  })  
-  .then(() => {
-    console.log("Notice Added");
-    
-    setTimeout(()=>{
-      setResponse('Notice added!');
-    },1000)
-  },error=>{
-    Alert.alert('oops!','Something went wrong',
-    [{text:'understodd',onPress:()=> console.log('alert closed')
-    }])
-  });
+      if(notice.length > 4){
+
+        var ts = new Date();
+        console.log(ts.toISOString());
+        var date = ts.toISOString();
+        console.log(notice);
+        usersCollection.doc(id).update({ 
+        notice: notice,
+        date: date,
+        role: userDetails.role,
+        uid: userDetails.userId,
+        author: userDetails.name,
+        state: "active",
+      })  
+      .then(() => {
+        console.log("Notice Added");
+        setTimeout(()=>{
+          setResponse('Notice Updated!');
+        },1000)
+      },error=>{
+        Alert.alert('oops!','Something went wrong',
+        [{text:'understodd',onPress:()=> console.log('alert closed')
+        }])
+      });
+
+      }else{
+        Alert.alert('Opps!','Notice should be over 4 characters long',[
+            {text:'Unserstood', onPress:()=>console.log("alrert closed")
+            }
+        ])
+      }
+
   
 }
 
   return (
+    <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
          <View style={styles.container}>
            <View style={styles.header}>
                 <Text style={styles.text_header}>
@@ -82,6 +93,12 @@ UpdateNoticeScreen = ({navigation,route})=> {
                             onChangeText={(val) => setNotice(val)}
                             />
 
+          </View>
+
+          <View style={{alignContent:"center"}}>
+              <Text style={{textAlign:"center",color:'green'}}>
+                  {response}
+              </Text>
           </View>
           
           </View>
@@ -121,6 +138,7 @@ UpdateNoticeScreen = ({navigation,route})=> {
                         </View>
             
           </View>
+          </TouchableWithoutFeedback>
   );
 };
 

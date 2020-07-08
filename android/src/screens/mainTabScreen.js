@@ -96,7 +96,7 @@ const homeStackScreen =({navigation})=>{
         }}>
           <homeStack.Screen 
             name="Home" 
-            component={UpdateNoticesScreen} 
+            component={HomeScreen} 
             options ={{
               title:"NoticeBoard",
               headerLeft: ()=>{

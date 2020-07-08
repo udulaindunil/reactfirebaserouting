@@ -50,17 +50,25 @@ UpdateNoticesScreen = ({navigation})=> {
 
   return (
     <>
+
+      <View style={styles.header}>
+          <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update Notices</Text>
+      </View>
+
     <View style={styles.container}>
 
-     <Swipeout {...swipeSettinngs}>
     <FlatList
+    style={{width:'100%'}}
     data={notices}
     keyExtractor={(item)=>item.key}
     renderItem={({ item }) => (<Notice item={item} navigation={navigation}/>)}
     />
-    </Swipeout>
-    </View>
     
+    </View>
+    <View style={styles.intro}>
+      <Text>For Update touch the notice</Text>
+      <Text>For delete wipe from the right to left</Text>
+    </View>
   </>
   );
 };
@@ -68,7 +76,16 @@ UpdateNoticesScreen = ({navigation})=> {
 export default UpdateNoticesScreen;
 
 const styles = StyleSheet.create({
+  header:{
+    width: '100%',
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 26,
+    backgroundColor:'#009387',
+},
   container:{
+    width:'100%',
     flex: 1, 
     justifyContent: "center", 
     alignItems: "center",
@@ -76,5 +93,8 @@ const styles = StyleSheet.create({
   },
   b:{
    color:"blue"
+  },
+  intro:{
+    alignContent: "flex-end"
   }
 });

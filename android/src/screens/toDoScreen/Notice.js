@@ -34,26 +34,33 @@ function Notice({item,navigation}){
     // } 
 
     return(
+
+        
+
+      
         <Swipeout {...swipeSettinngs}>
             <LinearGradient
             colors={['#11f7e5', '#08ab9d']}
             style={styles.noticeElement}>
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('UpdateNoticeScreen',item)}
-                    >
-                        <View style={styles.notice}>
-                            <Text style={styles.notice}>{item.notice}</Text>
-                        </View>
-                </TouchableOpacity>
-            <View style={styles.details}>
-                <Text style={styles.detailsText}>{item.author}</Text>
-                <Text style={styles.detailsText}>{moment(item.date).fromNow()}</Text>
-                {/* <Text>Date: {}</Text> */}
-            </View>
 
-            
+                            <TouchableOpacity
+                                onPress={()=>navigation.navigate('UpdateNoticeScreen',item)}
+                                >
+                                    <View style={styles.notice}>
+                                        <Text style={styles.notice}>{item.notice}</Text>
+                                    </View>
+                            </TouchableOpacity>
+
+
+                            <View style={styles.details}>
+                                <Text style={styles.detailsText}>{item.author}</Text>
+                                <Text style={styles.detailsText}>{moment(item.date).fromNow()}</Text>
+                                {/* <Text>Date: {}</Text> */}
+                            </View>
+           
             </LinearGradient>
         </Swipeout>
+       
     );
 
 }

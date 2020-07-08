@@ -31,6 +31,7 @@ const Drawer = createDrawerNavigator();
 function App() {
 
   const [isLoading, setIsLoading] = useState('');
+  const [error,setError] = useState('');
 
   const initialLoginState={
     isLoading:true,
@@ -39,6 +40,7 @@ function App() {
     role: null,
     username: null,
     name: null,
+    error:null,
   }
 
   const loginReducer =(prevState,action)=>{
@@ -90,6 +92,8 @@ function App() {
           ...prevState,
           isLoading : false,
         };
+
+        
     
     }
   }
@@ -115,7 +119,6 @@ function App() {
              let name=documentSnapshot.data().name;
              
              console.log(role);
-             
              dispatch({type:'SIGNIN',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
           });
         });
@@ -123,6 +126,7 @@ function App() {
        
       },error=>{
         console.log(error);
+       
       })
       
        // for the devlopment
@@ -134,19 +138,17 @@ function App() {
         dispatch({type:'LOGOUT'});
     },error=>{
       dispatch({type:'LOGOUT'});
-      console.log(error);
     });
     },
     signUp:(name,profileImage,username,email,password,role)=>{
       console.log(role);
-      
       auth().createUserWithEmailAndPassword(email,password).then((res)=>{
         console.log("user created");
         console.log(res.user.email);
         firestore().collection('users').doc(res.user.uid).set({name:name,profileImage:profileImage,username:username,email:res.user.email,uid:res.user.uid,role:role});
         dispatch({type:'SIGNUP',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
       },error=>{
-        console.log(error);
+        
       })
     }
   }));
@@ -188,7 +190,11 @@ function App() {
                     <Drawer.Screen name="BookMarkScreen" component={BookMarkScreen}  initialParams={{ userId: loginState.userId}}/>
                     <Drawer.Screen name="UpdateNoticeScreen" component={UpdateNoticeScreen} />
                   </Drawer.Navigator>
-                ):<RootStackScreen/>}
+                ): (    
+                  
+                    <RootStackScreen />
+                                                           
+                  )}
               </NavigationContainer>
       </UserDetails.Provider>
     </AuthContext.Provider>
