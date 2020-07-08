@@ -79,7 +79,8 @@ const SignInScreen = ({navigation})=>{
 
     const loginHandle=(username,password)=>{
         if(username.length>3 && password.length>5){
-            signIn(username,password)
+          signIn(username,password);
+                    
         }  else{
             Alert.alert('Opps!','Invalid details',[
                 {text:'Try again', onPress:()=>console.log("alrert closed")

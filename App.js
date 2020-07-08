@@ -15,7 +15,9 @@ import AddNoticeScreen from './android/src/screens/drawerScreens/addNoticeScreen
 import SettingsScreen from './android/src/screens/drawerScreens/settingsScreen';
 import BookMarkScreen from './android/src/screens/drawerScreens/boockMarkScreen';
 import UpdateNoticesScreen from './android/src/screens/drawerScreens/updateNotices';
-import UpdateNoticeScreen from './android/src/screens/toDoScreen/UpdateNotice'
+import UpdateNoticeScreen from './android/src/screens/toDoScreen/UpdateNotice';
+import CommentNoticeScreen from './android/src/screens/toDoScreen/commentNotice';
+import NoticeCommentsScreen from './android/src/screens/drawerScreens/noticeComments';
 import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import {ActivityIndicator } from 'react-native-paper';
@@ -122,11 +124,8 @@ function App() {
              dispatch({type:'SIGNIN',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
           });
         });
-
-       
       },error=>{
-        console.log(error);
-       
+        return error;
       })
       
        // for the devlopment
@@ -148,7 +147,7 @@ function App() {
         firestore().collection('users').doc(res.user.uid).set({name:name,profileImage:profileImage,username:username,email:res.user.email,uid:res.user.uid,role:role});
         dispatch({type:'SIGNUP',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
       },error=>{
-        
+        return error;
       })
     }
   }));
@@ -189,6 +188,10 @@ function App() {
                     <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
                     <Drawer.Screen name="BookMarkScreen" component={BookMarkScreen}  initialParams={{ userId: loginState.userId}}/>
                     <Drawer.Screen name="UpdateNoticeScreen" component={UpdateNoticeScreen} />
+                    <Drawer.Screen name="CommentNoticeScreen" component={CommentNoticeScreen} />
+                    <Drawer.Screen name="NoticeCommentsScreen" component={NoticeCommentsScreen} />
+                    
+                    
                   </Drawer.Navigator>
                 ): (    
                   

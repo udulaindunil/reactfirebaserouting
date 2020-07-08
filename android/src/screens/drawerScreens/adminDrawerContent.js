@@ -35,16 +35,7 @@ export function AdminDrawerContent(props){
     const paperTheme = useTheme();
 
 
-    //for firbase user here
-    const [userEmail, setEmail] = useState();
-    const [firebaseUser,setFirebaseUser] = useState();
-
-    useEffect(() => {
-        setEmail(auth().currentUser.email);
-    }, []);
-
-
-
+  
     return(
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
@@ -57,10 +48,9 @@ export function AdminDrawerContent(props){
                             size={50}/>
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>
-                                    {userEmail}
+                                    {userDetails.username}
                                 </Title>
-                                <Caption style={styles.caption}>Admin
-
+                                <Caption style={styles.caption}> {userDetails.name}
                                 </Caption>
                             </View>
                         </View>

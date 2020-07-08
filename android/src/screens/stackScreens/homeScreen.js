@@ -10,7 +10,7 @@ import {
 
 import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../components/userDetailsContext';
-
+import  PublicNotices  from '../toDoScreen/publicNotices';
 
 
 HomeScreen = ({navigation})=> {
@@ -39,14 +39,7 @@ HomeScreen = ({navigation})=> {
     <FlatList
     data={notices}
     keyExtractor={(item)=>item.key}
-    renderItem={({ item }) => (
-    <View style={{ height: 90, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        
-        <Text>Notice: {item.notice}</Text>
-        <Text>Published: {item.date}</Text>
-        <Text>Complete: {item.complete}</Text>
-    </View>
-    )}
+    renderItem={({ item }) => (<PublicNotices item={item} navigation={navigation}/>)}
     />
   </>
   );
