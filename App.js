@@ -14,6 +14,8 @@ import DrawerContent from './android/src/screens/drawerContent';
 import AddNoticeScreen from './android/src/screens/drawerScreens/addNoticeScreen';
 import SettingsScreen from './android/src/screens/drawerScreens/settingsScreen';
 import BookMarkScreen from './android/src/screens/drawerScreens/boockMarkScreen';
+import UpdateNoticesScreen from './android/src/screens/drawerScreens/updateNotices';
+import UpdateNoticeScreen from './android/src/screens/toDoScreen/UpdateNotice'
 import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import {ActivityIndicator } from 'react-native-paper';
@@ -141,7 +143,7 @@ function App() {
       auth().createUserWithEmailAndPassword(email,password).then((res)=>{
         console.log("user created");
         console.log(res.user.email);
-        firestore().collection('users').add({name:name,profileImage:profileImage,username:username,email:res.user.email,uid:res.user.uid,role:role});
+        firestore().collection('users').doc(res.user.uid).set({name:name,profileImage:profileImage,username:username,email:res.user.email,uid:res.user.uid,role:role});
         dispatch({type:'SIGNUP',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
       },error=>{
         console.log(error);
@@ -153,13 +155,13 @@ function App() {
     setTimeout(()=>{
 
       // for testing 
-      // authContext.signIn('udulaindunil@gmail.com','123456')
+      authContext.signIn('udulaindunil@gmail.com','123456')
       
       // this under code is for orginal
-      setIsLoading(false);
-      let userId;
-      userId = null
-      dispatch({type:'RETRIVE_TOKEN', uid :userId});
+      // setIsLoading(false);
+      // let userId;
+      // userId = null
+      // dispatch({type:'RETRIVE_TOKEN', uid :userId});
     },1000);
   }, []);
 
@@ -181,8 +183,10 @@ function App() {
                   <Drawer.Navigator drawerContent={props=><DrawerContent{...props}/>}>
                     <Drawer.Screen name="HomeDrawer" component={MainTabsScreen}  />
                     <Drawer.Screen name="AddNoticeScreen" component={AddNoticeScreen} />
+                    <Drawer.Screen name="UpdateNoticesScreen" component={UpdateNoticesScreen} />
                     <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
                     <Drawer.Screen name="BookMarkScreen" component={BookMarkScreen}  initialParams={{ userId: loginState.userId}}/>
+                    <Drawer.Screen name="UpdateNoticeScreen" component={UpdateNoticeScreen} />
                   </Drawer.Navigator>
                 ):<RootStackScreen/>}
               </NavigationContainer>

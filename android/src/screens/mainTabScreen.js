@@ -11,6 +11,7 @@ import ExploreScreen from './stackScreens/exploreScreen'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SupportScreen from './drawerScreens/addNoticeScreen';
+import UpdateNoticesScreen from './drawerScreens/updateNotices';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -95,7 +96,7 @@ const homeStackScreen =({navigation})=>{
         }}>
           <homeStack.Screen 
             name="Home" 
-            component={HomeScreen} 
+            component={UpdateNoticesScreen} 
             options ={{
               title:"NoticeBoard",
               headerLeft: ()=>{

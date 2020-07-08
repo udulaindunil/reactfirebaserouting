@@ -68,6 +68,32 @@ export function AdminDrawerContent(props){
 
                     </View>
 
+
+                    <Drawer.Section style={styles.drawerSection}>
+                            <DrawerItem 
+                                    icon={({color, size}) => (
+                                        <Icon 
+                                        name="account-check-outline" 
+                                        color={color}
+                                        size={size}
+                                        />
+                                    )}
+                                    label="New Notice"
+                                    onPress={() => {props.navigation.navigate('AddNoticeScreen')}}
+                                />
+
+                                <DrawerItem 
+                                    icon={({color, size}) => (
+                                        <Icon 
+                                        name="settings-outline" 
+                                        color={color}
+                                        size={size}
+                                        />
+                                    )}
+                                    label="Update Notices"
+                                    onPress={() => {props.navigation.navigate('UpdateNoticesScreen')}}
+                                />
+                    </Drawer.Section>
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -117,17 +143,7 @@ export function AdminDrawerContent(props){
                             onPress={() => {props.navigation.navigate('SettingsScreen')}}
                         />
 
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                                <Icon 
-                                name="account-check-outline" 
-                                color={color}
-                                size={size}
-                                />
-                            )}
-                            label="New Notice"
-                            onPress={() => {props.navigation.navigate('AddNoticeScreen')}}
-                        />
+                        
                     </Drawer.Section>
                     <Drawer.Section title="Preferences">
                         <TouchableRipple onPress={()=>{toggleTheme()}}>

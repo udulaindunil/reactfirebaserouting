@@ -10,17 +10,31 @@ import {
 
 import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../components/userDetailsContext';
+import Swipeout from 'react-native-swipeout';
+import Notice from '../toDoScreen/Notice'
 
 
 
-HomeScreen = ({navigation})=> {
+UpdateNoticesScreen = ({navigation})=> {
+
+    const swipeSettinngs={
+        autoClose:true,
+        right:[{
+            onPress: ()=>{
+                deleted(doc.key)
+            },
+            type: 'Delete',
+            text: 'Delete'
+        }]
+    }
 
   const userDetails = useContext(UserDetails);
 
   const [notices,setNotices] = useState()
 
   useEffect(()=>{     
-    const subscriber = firestore().collection('notices').where('state','==','active').onSnapshot(querySnapshot=>{
+      let status = 'active'
+    const subscriber = firestore().collection('notices').where('uid','==',userDetails.userId).where('state','==',"active").onSnapshot(querySnapshot=>{
         const notices = [];
         querySnapshot.forEach(documentSnapshot=>{
           notices.push({
@@ -36,29 +50,29 @@ HomeScreen = ({navigation})=> {
 
   return (
     <>
+    <View style={styles.container}>
+
+     <Swipeout {...swipeSettinngs}>
     <FlatList
     data={notices}
     keyExtractor={(item)=>item.key}
-    renderItem={({ item }) => (
-    <View style={{ height: 90, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        
-        <Text>Notice: {item.notice}</Text>
-        <Text>Published: {item.date}</Text>
-        <Text>Complete: {item.complete}</Text>
-    </View>
-    )}
+    renderItem={({ item }) => (<Notice item={item} navigation={navigation}/>)}
     />
+    </Swipeout>
+    </View>
+    
   </>
   );
 };
 
-export default HomeScreen;
+export default UpdateNoticesScreen;
 
 const styles = StyleSheet.create({
-  a:{
+  container:{
     flex: 1, 
     justifyContent: "center", 
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "#fff"
   },
   b:{
    color:"blue"

@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext,useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,24 +11,29 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
-import moment from 'moment'
 import { UserDetails } from '../../../../components/userDetailsContext';
-
-
 const usersCollection = firestore().collection('notices');
 
-
-AddNoticeScreen = ({navigation})=> {
-
-  const userDetails = useContext(UserDetails);  
-  const [notice,setNotice] = useState('');
-  const [response,setResponse] = useState('')
+UpdateNoticeScreen = ({navigation,route})=> {
+    const initNotice= route.params.notice;
+    const id = route.params.key;
+    const userDetails = useContext(UserDetails);
+    console.log(initNotice);
+    
+    const [notice, setNotice] = useState(initNotice)
+    const [response,setResponse] = useState('')
+    
+    useEffect(() => {
+        setNotice(initNotice);
+      }, []);
 
   function publishNotice(){
     var ts = new Date();
     console.log(ts.toISOString());
     var date = ts.toISOString();
-    usersCollection.add({ 
+    console.log(notice);
+    
+    usersCollection.doc(id).update({ 
     notice: notice,
     date: date,
     role: userDetails.role,
@@ -54,7 +59,7 @@ AddNoticeScreen = ({navigation})=> {
          <View style={styles.container}>
            <View style={styles.header}>
                 <Text style={styles.text_header}>
-                  Add New Notice
+                  Update Notice
                 </Text>
            </View>
 
@@ -68,6 +73,7 @@ AddNoticeScreen = ({navigation})=> {
                             color="#05375a"
                             size={20}/>
                         <TextInput
+                            value={notice}
                             multiline={true}
                             numberOfLines={12}
                             placeholder="Your Email"
@@ -118,7 +124,7 @@ AddNoticeScreen = ({navigation})=> {
   );
 };
 
-export default AddNoticeScreen;
+export default UpdateNoticeScreen;
 
 
 const styles = StyleSheet.create({
