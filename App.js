@@ -110,7 +110,7 @@ function App() {
       userToken= null;
 
       auth().signInWithEmailAndPassword(email,password).then((res)=>{
-        console.log("sign with user in firebase");
+        console.log(res.user.email);
         // for the production here
         firestore().collection('users').where('uid','==',res.user.uid).get().then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot=>{
@@ -121,7 +121,7 @@ function App() {
              let name=documentSnapshot.data().name;
              
              console.log(role);
-             dispatch({type:'SIGNIN',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
+             dispatch({type:'SIGNIN',email:res.user.email, uid :res.user.uid, role:role,username:username,name:name});
           });
         });
       },error=>{

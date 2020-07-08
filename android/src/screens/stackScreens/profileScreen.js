@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -14,35 +14,62 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
+import { UserDetails } from '../../../../components/userDetailsContext';
 
 
 
 ProfileScreen = ({navigation})=> {
+  const userDetails = useContext(UserDetails);
   return (
-         <View style={styles.a}>
-          <Text style={styles.b}>
-                 Profile Screen
-          </Text>
-
-          <Button 
-            title="Go to details screen"
-            onPress={() => navigation.navigate("Details")}
-           />
-            
+        <View style={styles.container}>
+          <View>
+              <Text>For Profile image </Text>
           </View>
+          
+          <View style={{justifyContent:"center"}}>
+                    <View style={styles.row}>
+                      <Text style={styles.th}>User Name</Text>
+                      <Text style={styles.td}>{userDetails.username}</Text>
+                    </View>
+
+                    <View style={styles.row}>
+                      <Text style={styles.th}>Name</Text>
+                      <Text style={styles.td}>{userDetails.name}</Text>
+                    </View>
+
+                    <View style={styles.row}>
+                      <Text style={styles.th} >Email</Text>
+                      <Text style={styles.td}>{userDetails.userEmail}</Text>
+                    </View>
+
+                    <View style={styles.row}>
+                      <Text style={styles.th} >Role</Text>
+                      <Text style={styles.td}>{userDetails.role}</Text>
+                    </View>
+          </View>
+        </View>
   );
 };
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  a:{
-    flex: 1, 
-    justifyContent: "center", 
-    alignItems: "center"
-  },
-  b:{
-   color:"blue"
-  }
+ container:{
+   flex:1,
+   padding: 8,
+ },
+ row:{
+  marginTop:10,
+  padding:10,
+  flexDirection: "column",
+  justifyContent: 'center',
+ },
+ th:{
+   color:"#03544e",
+   fontWeight: "bold",
+   
+ },
+ td:{
+   color:"#353838"
+ }
 });
