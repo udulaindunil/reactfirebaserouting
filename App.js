@@ -11,9 +11,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import MainTabsScreen from './android/src/screens/mainTabScreen';
 import DrawerContent from './android/src/screens/drawerContent';
-import SupportScreen from './android/src/screens/supportScreen';
-import SettingsScreen from './android/src/screens/settingsScreen';
-import BookMarkScreen from './android/src/screens/boockMarkScreen';
+import AddNoticeScreen from './android/src/screens/drawerScreens/addNoticeScreen';
+import SettingsScreen from './android/src/screens/drawerScreens/settingsScreen';
+import BookMarkScreen from './android/src/screens/drawerScreens/boockMarkScreen';
 import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import {ActivityIndicator } from 'react-native-paper';
@@ -35,6 +35,8 @@ function App() {
     userEmail : null,
     userId : null,
     role: null,
+    username: null,
+    name: null,
   }
 
   const loginReducer =(prevState,action)=>{
@@ -53,6 +55,8 @@ function App() {
           userEmail: action.email,
           userId: action.uid,
           role:action.role,
+          username: action.username,
+          name: action.name,
           isLoading : false,
         };
 
@@ -62,6 +66,8 @@ function App() {
           userEmail: action.email,
           userId: action.uid,
           role:action.role,
+          username: action.username,
+          name: action.name,
           isLoading : false,
         };
 
@@ -72,6 +78,8 @@ function App() {
           userEmail: null,
           userId: null,
           role: null,
+          username: null,
+          name: null,
           isLoading : false,
         };
       
@@ -95,20 +103,28 @@ function App() {
 
       auth().signInWithEmailAndPassword(email,password).then((res)=>{
         console.log("sign with user in firebase");
+        // for the production here
         firestore().collection('users').where('uid','==',res.user.uid).get().then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot=>{
             // console.log(documentSnapshot.data());
             
              let role=documentSnapshot.data().role;
+             let username=documentSnapshot.data().username;
+             let name=documentSnapshot.data().name;
+             
              console.log(role);
              
-             dispatch({type:'SIGNIN',email: res.user.email, uid :res.user.uid, role:role});
+             dispatch({type:'SIGNIN',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
           });
         });
+
+       
       },error=>{
         console.log(error);
       })
       
+       // for the devlopment
+      //  dispatch({type:'SIGNIN',email: "udulaindnil@gmail.com", uid :"FwjLyv1K2mSUFbdF4U6ieVpQEph2", role:"admin"});
     },
     signOut:()=>{
       auth().signOut().then(() => {
@@ -119,14 +135,14 @@ function App() {
       console.log(error);
     });
     },
-    signUp:(email,password,role)=>{
+    signUp:(name,profileImage,username,email,password,role)=>{
       console.log(role);
       
       auth().createUserWithEmailAndPassword(email,password).then((res)=>{
         console.log("user created");
         console.log(res.user.email);
-        firestore().collection('users').add({email:res.user.email,uid:res.user.uid,role:role});
-        dispatch({type:'SIGNUP',email: res.user.email, uid :res.user.uid, role:role});
+        firestore().collection('users').add({name:name,profileImage:profileImage,username:username,email:res.user.email,uid:res.user.uid,role:role});
+        dispatch({type:'SIGNUP',email: res.user.email, uid :res.user.uid, role:role,username:username,name:name});
       },error=>{
         console.log(error);
       })
@@ -164,7 +180,7 @@ function App() {
                 {loginState.userId !== null ?(
                   <Drawer.Navigator drawerContent={props=><DrawerContent{...props}/>}>
                     <Drawer.Screen name="HomeDrawer" component={MainTabsScreen}  />
-                    <Drawer.Screen name="SupportScreen" component={SupportScreen} />
+                    <Drawer.Screen name="AddNoticeScreen" component={AddNoticeScreen} />
                     <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
                     <Drawer.Screen name="BookMarkScreen" component={BookMarkScreen}  initialParams={{ userId: loginState.userId}}/>
                   </Drawer.Navigator>

@@ -3,7 +3,7 @@ import {Text,StyleSheet,Button,TouchableOpacity,TextInput,View} from 'react-nati
 import { Appbar, } from 'react-native-paper'
 import firebase from '@react-native-firebase/database'
 import {FlatList} from 'react-native'
-import Todos from './Todos'
+import Todos from '../toDoScreen/Todos'
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
 

@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 
 import firestore from "@react-native-firebase/firestore"
-import { UserDetails } from '../../../components/userDetailsContext';
+import { UserDetails } from '../../../../components/userDetailsContext';
 
 
 
 HomeScreen = ({navigation})=> {
 
-  const x = useContext(UserDetails)
+  const userDetails = useContext(UserDetails);
 
   const [notices,setNotices] = useState()
 

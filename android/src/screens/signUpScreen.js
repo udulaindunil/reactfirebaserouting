@@ -32,7 +32,10 @@ const SignUpScreen = ({navigation})=>{
 
 
     const [data, setData] = React.useState({
+        name: '',
+        profileImage: '',
         username: '',
+        email:'',
         password: '',
         confirm_password: '',
         check_textInputChange: false,
@@ -40,7 +43,25 @@ const SignUpScreen = ({navigation})=>{
         confirm_secureTextEntry: true,
     });
 
-    const textInputChange = (val) => {
+
+    const nameTextInputChange = (val) => {
+        if( val.length !== 0 ) {
+            setData({
+                ...data,
+                name: val,
+                check_textInputChange: true
+            });
+        } else {
+            setData({
+                ...data,
+                name: val,
+                check_textInputChange: false
+            });
+        }
+    }
+
+
+    const usernameTextInputChange = (val) => {
         if( val.length !== 0 ) {
             setData({
                 ...data,
@@ -51,6 +72,22 @@ const SignUpScreen = ({navigation})=>{
             setData({
                 ...data,
                 username: val,
+                check_textInputChange: false
+            });
+        }
+    }
+
+    const emailTextInputChange = (val) => {
+        if( val.length !== 0 ) {
+            setData({
+                ...data,
+                email: val,
+                check_textInputChange: true
+            });
+        } else {
+            setData({
+                ...data,
+                email: val,
                 check_textInputChange: false
             });
         }
@@ -85,8 +122,8 @@ const SignUpScreen = ({navigation})=>{
         });
     }
 
-    const signInHandle=(username,password,role)=>{
-        signUp(username,password,role)
+    const signInHandle=(name,profileImage,username,email,password,role)=>{
+        signUp(name,profileImage,username,email,password,role)
     }
 
         return (
@@ -102,8 +139,9 @@ const SignUpScreen = ({navigation})=>{
                     }]}
                     
                     >
+
                     <Text style={styles.text_footer}>
-                        Email
+                        User Name
                     </Text>
                     <View style={styles.action}>
                         <FontAwesome 
@@ -111,10 +149,10 @@ const SignUpScreen = ({navigation})=>{
                             color="#05375a"
                             size={20}/>
                         <TextInput
-                            placeholder="Your Email"
+                            placeholder="eg: JohnD"
                             style={styles.textInput}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
+                            onChangeText={(val) => usernameTextInputChange(val)}
                             />
                             {data.check_textInputChange ?
                             <Animatable.View
@@ -127,6 +165,59 @@ const SignUpScreen = ({navigation})=>{
                             </Animatable.View>
                             : null}
                     </View>
+
+                    <Text style={styles.text_footer}>
+                        Name
+                    </Text>
+                    <View style={styles.action}>
+                        <FontAwesome 
+                            name="user-o"
+                            color="#05375a"
+                            size={20}/>
+                        <TextInput
+                            placeholder="eg: John doily"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            onChangeText={(val) => nameTextInputChange(val)}
+                            />
+                            {data.check_textInputChange ?
+                            <Animatable.View
+                                animation="bounceIn">
+                                <Feather
+                                    name="check-circle"
+                                    color ="green"
+                                    size={20}
+                                />
+                            </Animatable.View>
+                            : null}
+                    </View>
+
+                    <Text style={styles.text_footer}>
+                        Email
+                    </Text>
+                    <View style={styles.action}>
+                        <FontAwesome 
+                            name="user-o"
+                            color="#05375a"
+                            size={20}/>
+                        <TextInput
+                            placeholder="Your Email"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            onChangeText={(val) => emailTextInputChange(val)}
+                            />
+                            {data.check_textInputChange ?
+                            <Animatable.View
+                                animation="bounceIn">
+                                <Feather
+                                    name="check-circle"
+                                    color ="green"
+                                    size={20}
+                                />
+                            </Animatable.View>
+                            : null}
+                    </View>
+
                     <Text style={[styles.text_footer,{marginTop:25}]}>
                             Password
                     </Text>
@@ -221,7 +312,7 @@ const SignUpScreen = ({navigation})=>{
                         
                     <TouchableOpacity
                             style={styles.signIn}
-                            onPress={()=>{signInHandle(data.username,data.password,role)}}
+                            onPress={()=>{signInHandle(data.name,data.profileImage,data.username,data.email,data.password,role)}}
                         >
                                 <LinearGradient
                                     colors={['#08d4c4', '#01ab9d']}
@@ -292,7 +383,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#f2f2f2',
-        paddingBottom: 5
+        paddingBottom: 15
     },
     actionError: {
         flexDirection: 'row',

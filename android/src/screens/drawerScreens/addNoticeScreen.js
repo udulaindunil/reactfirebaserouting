@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,14 +12,15 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment'
+import { UserDetails } from '../../../../components/userDetailsContext';
 
 
 const usersCollection = firestore().collection('notices');
 
 
-SupportScreen = ({navigation})=> {
+AddNoticeScreen = ({navigation})=> {
 
-
+  const userDetails = useContext(UserDetails);  
   const [notice,setNotice] = useState('');
   const [response,setResponse] = useState('')
 
@@ -27,9 +28,11 @@ SupportScreen = ({navigation})=> {
     var date = moment()
       .utcOffset('+05:30')
       .format('YYYY-MM-DD hh:mm:ss a');
-    usersCollection.add({
+    usersCollection.add({ 
     notice: notice,
     date: date,
+    role: userDetails.role,
+    uid: userDetails.uid
   })
   .then(() => {
     console.log("Notice Added");
@@ -75,41 +78,45 @@ SupportScreen = ({navigation})=> {
           
           </View>
 
-          <TouchableOpacity
-                            style={styles.signIn}
-                            onPress={() => publishNotice()}
-                        >
-                                <LinearGradient
-                                    colors={['#08d4c4', '#01ab9d']}
-                                    style={styles.signIn}
-                                    >
-                                    <Text    
-                                        style={[styles.textSign, {color:'#fff'}]}>
-                                               Publish notice
-                                    </Text>
-                                </LinearGradient>
-                        </TouchableOpacity>
+                        <View style={styles.butonSet}>
 
-           <TouchableOpacity
-                            style={styles.signIn}
-                            onPress={() => navigation.navigate("Home")}
-                        >
-                                <LinearGradient
-                                    colors={['#08d4c4', '#01ab9d']}
-                                    style={styles.signIn}
-                                    >
-                                    <Text    
-                                        style={[styles.textSign, {color:'#fff'}]}>
-                                               Home
-                                    </Text>
-                                </LinearGradient>
-                        </TouchableOpacity>
+                                  <TouchableOpacity
+                                      style={styles.signIn}
+                                      onPress={() => publishNotice()}
+                                  >
+                                          <LinearGradient
+                                              colors={['#08d4c4', '#01ab9d']}
+                                              style={styles.signIn}
+                                              >
+                                              <Text    
+                                                  style={[styles.textSign, {color:'#fff'}]}>
+                                                        Publish notice
+                                              </Text>
+                                          </LinearGradient>
+                                  </TouchableOpacity>
+
+                                  <TouchableOpacity
+                                      style={styles.signIn}
+                                      onPress={() => navigation.navigate("Home")}
+                                  >
+                                          <LinearGradient
+                                              colors={['#08d4c4', '#01ab9d']}
+                                              style={styles.signIn}
+                                              >
+                                              <Text    
+                                                  style={[styles.textSign, {color:'#fff',size:16}]}>
+                                                        Home
+                                              </Text>
+                                          </LinearGradient>
+                                  </TouchableOpacity>
+
+                        </View>
             
           </View>
   );
 };
 
-export default SupportScreen;
+export default AddNoticeScreen;
 
 
 const styles = StyleSheet.create({
@@ -173,14 +180,19 @@ const styles = StyleSheet.create({
   },
   signIn: {
       alignItems: 'flex-end',
-      width: '100%',
+      width: '80%',
       height: 50,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 10
+      borderRadius: 10,
+      marginBottom:4
   },
   textSign: {
       fontSize: 18,
       fontWeight: 'bold'
+  },
+  butonSet:{
+    alignItems: "center",
+    justifyContent: 'center',
   }
 });

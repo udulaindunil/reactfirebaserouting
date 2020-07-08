@@ -3,14 +3,14 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import HomeScreen from './homeScreen'
-import DetailsScreen from './detailsScreen'
-import ProfileScreen from './profileScreen'
-import ExploreScreen from './exploreScreen'
+import HomeScreen from './stackScreens/homeScreen'
+import DetailsScreen from './stackScreens/detailsScreen'
+import ProfileScreen from './stackScreens/profileScreen'
+import ExploreScreen from './stackScreens/exploreScreen'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import SupportScreen from './supportScreen';
+import SupportScreen from './drawerScreens/addNoticeScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
