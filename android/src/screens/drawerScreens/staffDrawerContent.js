@@ -60,7 +60,6 @@ export function StaffDrawerContent(props){
                                     {userEmail}
                                 </Title>
                                 <Caption style={styles.caption}>@_Uae
-
                                 </Caption>
                             </View>
                         </View>

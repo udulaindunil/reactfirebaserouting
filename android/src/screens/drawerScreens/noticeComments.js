@@ -15,10 +15,8 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 NoticeCommentsScreen = ({navigation,route})=> {
-
     const id = route.params.key;
-    console.log(id);
-    
+    console.log(id+"heree is going");
     const swipeSettinngs={
         autoClose:true,
         right:[{
@@ -63,7 +61,7 @@ NoticeCommentsScreen = ({navigation,route})=> {
     style={{width:'100%'}}
     data={comments}
     keyExtractor={(item)=>item.key}
-    renderItem={({ item }) => (<>
+    renderItem={({ item }) => (
 
             <LinearGradient
             colors={['#11f7e5', '#08ab9d']}
@@ -76,9 +74,8 @@ NoticeCommentsScreen = ({navigation,route})=> {
                 <Text style={styles.detailsText}>{item.author}</Text>
                 <Text style={styles.detailsText}>{moment(item.date).fromNow()}</Text>
             </View>
-
             </LinearGradient>
-    </>)}
+    )}
     />
     
     </View>
