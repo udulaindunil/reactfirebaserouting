@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import firestore from "@react-native-firebase/firestore"
-import { UserDetails } from '../../../../components/userDetailsContext';
+import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import moment from 'moment'
 import LinearGradient from 'react-native-linear-gradient';
 

@@ -21,9 +21,9 @@ import NoticeCommentsScreen from './android/src/screens/drawerScreens/noticeComm
 import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import {ActivityIndicator } from 'react-native-paper';
-import {AuthContext } from './components/context';
+import {AuthContext } from './contextFiles/context';
 
-import {UserDetails } from './components/userDetailsContext';
+import {UserDetails } from './contextFiles/userDetailsContext';
 import firestore from "@react-native-firebase/firestore"
 import auth from '@react-native-firebase/auth';
 export const userDetailsContext = React.createContext();
@@ -157,12 +157,13 @@ function App() {
 
       // for testing 
       // authContext.signIn('udulaindunil@gmail.com','1234567')
+      authContext.signIn('shenal@gmail.com','123456')
       
       // this under code is for orginal
-      setIsLoading(false);
-      let userId;
-      userId = null
-      dispatch({type:'RETRIVE_TOKEN', uid :userId});
+      // setIsLoading(false);
+      // let userId;
+      // userId = null
+      // dispatch({type:'RETRIVE_TOKEN', uid :userId});
     },1000);
   }, []);
 

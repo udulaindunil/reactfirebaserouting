@@ -13,7 +13,7 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
-import { UserDetails } from '../../../../components/userDetailsContext';
+import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import { ScrollView } from 'react-native-gesture-handler';
 const usersCollection = firestore().collection('notices');
 

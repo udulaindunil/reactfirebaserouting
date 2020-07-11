@@ -21,7 +21,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { color } from 'react-native-reanimated';
-import {AuthContext} from '../../../components/context'
+import {AuthContext} from '../../../contextFiles/context'
 
 
 const SignUpScreen = ({navigation})=>{

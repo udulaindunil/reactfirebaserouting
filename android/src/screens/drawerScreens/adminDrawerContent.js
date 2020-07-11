@@ -19,10 +19,10 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons' 
 import { floor } from 'react-native-reanimated';
-import {AuthContext} from '../../../../components/context';
+import {AuthContext} from '../../../../contextFiles/context';
 import auth from '@react-native-firebase/auth';
 import User from '@react-native-firebase/app'
-import { UserDetails } from '../../../../components/userDetailsContext';
+import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 
 export function AdminDrawerContent(props){
 

@@ -7,10 +7,8 @@ import {
   FlatList
 
 } from 'react-native';
-
 import firestore from "@react-native-firebase/firestore"
-import { UserDetails } from '../../../../components/userDetailsContext';
-import Swipeout from 'react-native-swipeout';
+import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import Notice from '../toDoScreen/Notice'
 
 

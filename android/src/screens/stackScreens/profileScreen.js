@@ -14,7 +14,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { UserDetails } from '../../../../components/userDetailsContext';
+import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 
 
 

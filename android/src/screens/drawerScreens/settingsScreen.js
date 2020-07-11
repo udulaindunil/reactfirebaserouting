@@ -15,7 +15,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import auth from '@react-native-firebase/auth';
-import {AuthContext} from '../../../../components/context'
+import {AuthContext} from '../../../../contextFiles/context'
 
 SettingsScreen = ({navigation})=> {
 

@@ -18,30 +18,15 @@ import {
 } from '@react-navigation/drawer'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons' 
-import { floor } from 'react-native-reanimated';
-import {AuthContext} from '../../../../components/userDetailsContext';
-import auth from '@react-native-firebase/auth';
-import User from '@react-native-firebase/app'
-import { UserDetails } from '../../../../components/userDetailsContext';
-
+import {AuthContext} from '../../../../contextFiles/context';
+import {UserDetails} from '../../../../contextFiles/userDetailsContext';
 export function StaffDrawerContent(props){
 
-    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
     const {signOut} = React.useContext(AuthContext);
     const userDetails = useContext(UserDetails);
-    const toggleTheme =()=>{
-        setIsDarkTheme(!isDarkTheme);
-    }
-    const paperTheme = useTheme();
 
+  
 
-    //for firbase user here
-    const [userEmail, setEmail] = useState();
-    const [firebaseUser,setFirebaseUser] = useState();
-
-    useEffect(() => {
-        setEmail(auth().currentUser.email);
-    }, []);
 
 
 
@@ -56,10 +41,10 @@ export function StaffDrawerContent(props){
                             }}
                             size={50}/>
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>
-                                    {userEmail}
+                            <Title style={styles.title}>
+                                    {userDetails.username}
                                 </Title>
-                                <Caption style={styles.caption}>@_Uae
+                                <Caption style={styles.caption}> {userDetails.name}
                                 </Caption>
                             </View>
                         </View>
@@ -128,18 +113,7 @@ export function StaffDrawerContent(props){
                             onPress={() => {props.navigation.navigate('SupportScreen')}}
                         />
                     </Drawer.Section>
-                    <Drawer.Section title="Preferences">
-                        <TouchableRipple onPress={()=>{toggleTheme()}}>
-                            <View style={styles.preference}>
-                                <Text>Dark Theme</Text>
-                                <View pointerEvents="none">
 
-                                </View>
-                                <Switch value={paperTheme.dark}/>
-                            </View>
-                        </TouchableRipple>
-
-                    </Drawer.Section>
                 </View>
             </DrawerContentScrollView>
             <Drawer.Section style={styles.bottomDrawerSection}>
