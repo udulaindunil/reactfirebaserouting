@@ -41,7 +41,7 @@ const MainTabsScreen = ()=>{
             tabBarLabel: 'Details',
             tabBarColor: '#009387',
             tabBarIcon: ({ color }) => (
-              <Icon name="ios-notifications" color={color} size={26} />
+              <Icon name="ios-contacts" color={color} size={26} />
             ),
           }}
         />
@@ -64,7 +64,7 @@ const MainTabsScreen = ()=>{
             tabBarLabel: 'Explore',
             tabBarColor: '#009387',
             tabBarIcon: ({ color }) => (
-              <Icon name="ios-person" color={color} size={26} />
+              <Icon name="ios-paper" color={color} size={26} />
             ),
           }}
         />

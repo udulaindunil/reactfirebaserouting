@@ -18,6 +18,7 @@ import UpdateNoticesScreen from './android/src/screens/drawerScreens/updateNotic
 import UpdateNoticeScreen from './android/src/screens/toDoScreen/UpdateNotice';
 import CommentNoticeScreen from './android/src/screens/toDoScreen/commentNotice';
 import NoticeCommentsScreen from './android/src/screens/drawerScreens/noticeComments';
+import NoticeHistoryScreen from './android/src/screens/drawerScreens/noticeHistoryScreen';
 import RootStackScreen from './android/src/screens/rootStackScreen';
 import { View } from 'react-native-animatable';
 import {ActivityIndicator } from 'react-native-paper';
@@ -156,8 +157,8 @@ function App() {
     setTimeout(()=>{
 
       // for testing 
-      // authContext.signIn('udulaindunil@gmail.com','1234567')
-      authContext.signIn('shenal@gmail.com','123456')
+      authContext.signIn('udulaindunil@gmail.com','1234567')
+      // authContext.signIn('shenal@gmail.com','123456')
       
       // this under code is for orginal
       // setIsLoading(false);
@@ -191,7 +192,9 @@ function App() {
                     <Drawer.Screen name="UpdateNoticeScreen" component={UpdateNoticeScreen} />
                     <Drawer.Screen name="CommentNoticeScreen" component={CommentNoticeScreen} />
                     <Drawer.Screen name="NoticeCommentsScreen" component={NoticeCommentsScreen} />
+                    <Drawer.Screen name="NoticeHistoryScreen" component={NoticeHistoryScreen} />
                     
+                    {/*  */}
                     
                   </Drawer.Navigator>
                 ): (    

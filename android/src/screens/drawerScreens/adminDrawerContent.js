@@ -18,6 +18,7 @@ import {
 } from '@react-navigation/drawer'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons' 
+import Icon2 from 'react-native-vector-icons/Ionicons'
 import { floor } from 'react-native-reanimated';
 import {AuthContext} from '../../../../contextFiles/context';
 import auth from '@react-native-firebase/auth';
@@ -62,8 +63,8 @@ export function AdminDrawerContent(props){
                     <Drawer.Section style={styles.drawerSection}>
                             <DrawerItem 
                                     icon={({color, size}) => (
-                                        <Icon 
-                                        name="account-check-outline" 
+                                        <Icon2 
+                                        name="ios-create" 
                                         color={color}
                                         size={size}
                                         />
@@ -74,8 +75,8 @@ export function AdminDrawerContent(props){
 
                                 <DrawerItem 
                                     icon={({color, size}) => (
-                                        <Icon 
-                                        name="settings-outline" 
+                                        <Icon2 
+                                        name="ios-sync" 
                                         color={color}
                                         size={size}
                                         />
@@ -83,6 +84,19 @@ export function AdminDrawerContent(props){
                                     label="Update Notices"
                                     onPress={() => {props.navigation.navigate('UpdateNoticesScreen')}}
                                 />
+
+                                <DrawerItem 
+                                    icon={({color, size}) => (
+                                        <Icon2 
+                                        name="ios-filing" 
+                                        color={color}
+                                        size={size}
+                                        />
+                                    )}
+                                    label="Notices History"
+                                    onPress={() => {props.navigation.navigate('NoticeHistoryScreen')}}
+                                />  
+
                     </Drawer.Section>
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem 

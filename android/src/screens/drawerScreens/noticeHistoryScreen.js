@@ -13,7 +13,7 @@ import Notice from '../toDoScreen/Notice'
 
 
 
-UpdateNoticesScreen = ({navigation})=> {
+NoticeHistoryScreen = ({navigation})=> {
 
     const swipeSettinngs={
         autoClose:true,
@@ -32,7 +32,7 @@ UpdateNoticesScreen = ({navigation})=> {
 
   useEffect(()=>{     
       let status = 'active'
-    const subscriber = firestore().collection('notices').where('uid','==',userDetails.userId).where('state','==',"active").onSnapshot(querySnapshot=>{
+    const subscriber = firestore().collection('notices').where('uid','==',userDetails.userId).where('state','==',"deleted").onSnapshot(querySnapshot=>{
         const notices = [];
         querySnapshot.forEach(documentSnapshot=>{
           notices.push({
@@ -50,7 +50,7 @@ UpdateNoticesScreen = ({navigation})=> {
     <>
 
       <View style={styles.header}>
-          <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update Notices</Text>
+          <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Notices History</Text>
       </View>
 
     <View style={styles.container}>
@@ -59,19 +59,19 @@ UpdateNoticesScreen = ({navigation})=> {
     style={{width:'100%'}}
     data={notices}
     keyExtractor={(item)=>item.key}
-    renderItem={({ item }) => (<Notice item={item} navigation={navigation} history={false}/>)}
+    renderItem={({ item }) => (<Notice item={item} navigation={navigation} history={true}/>)}
     />
     
     </View>
     <View style={styles.intro}>
-      <Text>For Update touch the notice</Text>
+      <Text>For Update and Restore touch the notice</Text>
       <Text>For delete wipe from the right to left</Text>
     </View>
   </>
   );
 };
 
-export default UpdateNoticesScreen;
+export default NoticeHistoryScreen;
 
 const styles = StyleSheet.create({
   header:{

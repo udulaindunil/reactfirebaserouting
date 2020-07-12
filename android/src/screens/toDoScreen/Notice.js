@@ -7,7 +7,7 @@ import auth from '@react-native-firebase/auth';
 import moment from 'moment'
 import LinearGradient from 'react-native-linear-gradient';
 
-function Notice({item,navigation}){
+function Notice({item,navigation,history}){
 
     const swipeSettinngs={
         autoClose:true,
@@ -25,6 +25,9 @@ function Notice({item,navigation}){
     }
 
     function deleted(key){
+        if(history==true){
+            firestore().collection('notices').doc(key).delete();
+        }
         // firebase.database().ref('tasks/').child(doc.key).remove()
         firestore().collection('notices').doc(key).update({state:'deleted'})
     }
