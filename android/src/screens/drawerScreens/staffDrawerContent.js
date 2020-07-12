@@ -25,8 +25,7 @@ export function StaffDrawerContent(props){
     const {signOut} = React.useContext(AuthContext);
     const userDetails = useContext(UserDetails);
 
-  
-
+    const letter = userDetails.userEmail.substring(0,1);
 
 
 
@@ -36,10 +35,9 @@ export function StaffDrawerContent(props){
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15}}>
-                            <Avatar.Image source={{
-                                // uri: 'https://scontent.fcmb10-1.fna.fbcdn.net/v/t1.0-9/83548262_2225886281048391_8833482001009868800_n.jpg?_nc_cat=106&_nc_sid=09cbfe&_nc_ohc=uZLyz4PhJZsAX_MVAmE&_nc_ht=scontent.fcmb10-1.fna&oh=a3ea5805e66e773c46e03d84005d778c&oe=5EF9CC3E'
-                            }}
-                            size={50}/>
+                            <View style={styles.emailBox}>
+                                    <Text style={{fontSize:30,color:'#fff'}}>{letter}</Text>
+                            </View>
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                             <Title style={styles.title}>
                                     {userDetails.username}
@@ -177,6 +175,15 @@ const styles = StyleSheet.create({
       paddingVertical: 12,
       paddingHorizontal: 16,
     },
+    emailBox:{
+        backgroundColor:'#009387'
+        ,width: 50,
+        borderRadius: 50/2,
+        alignItems: "center",
+        alignContent:"center",
+        textAlignVertical:"center",
+        justifyContent: "center"
+    }
   });
 
 

@@ -157,8 +157,8 @@ function App() {
     setTimeout(()=>{
 
       // for testing 
-      authContext.signIn('udulaindunil@gmail.com','1234567')
-      // authContext.signIn('shenal@gmail.com','123456')
+      // authContext.signIn('udulaindunil@gmail.com','1234567')
+      authContext.signIn('shenal@gmail.com','123456')
       
       // this under code is for orginal
       // setIsLoading(false);

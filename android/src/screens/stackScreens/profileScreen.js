@@ -22,9 +22,7 @@ ProfileScreen = ({navigation})=> {
   const userDetails = useContext(UserDetails);
   return (
         <View style={styles.container}>
-          <View>
-              <Text>For Profile image </Text>
-          </View>
+         
           
           <View style={{justifyContent:"center"}}>
                     <View style={styles.row}>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text,StyleSheet,TouchableOpacity,Alert } from 'react-native';
 import { List } from 'react-native-paper';
 import Swipeout from 'react-native-swipeout';
 import firestore from '@react-native-firebase/firestore';
@@ -26,15 +26,21 @@ function Notice({item,navigation,history}){
 
     function deleted(key){
         if(history==true){
-            firestore().collection('notices').doc(key).delete();
+            Alert.alert('Danger!','Are you sure, You want to permanantly delete this notice',[
+                {text:'Yes', onPress:()=>firestore().collection('notices').doc(key).delete()
+                },{text:'No', onPress:()=>{}}
+            ])
+
+            
+        }else{
+            Alert.alert('Removing From Notice board','This Notice remove form the noticeboard and will apear on History',[
+                {text:'Ok', onPress:()=>firestore().collection('notices').doc(key).update({state:'deleted'})
+                },{text:'back', onPress:()=>{}}
+            ])
         }
-        // firebase.database().ref('tasks/').child(doc.key).remove()
-        firestore().collection('notices').doc(key).update({state:'deleted'})
+        
     }
 
-    // async function toggleComplete(){
-    //     await firebase().ref(`tasks/${userId}`).child(doc.key).update({complete:!doc.val().complete})
-    // } 
 
     return(
 
