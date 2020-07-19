@@ -99,7 +99,7 @@ export function StaffDrawerContent(props){
                             onPress={() => {props.navigation.navigate('SettingsScreen')}}
                         />
 
-                        <DrawerItem 
+                        {/* <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
                                 name="account-check-outline" 
@@ -109,7 +109,7 @@ export function StaffDrawerContent(props){
                             )}
                             label="Support"
                             onPress={() => {props.navigation.navigate('SupportScreen')}}
-                        />
+                        /> */}
                     </Drawer.Section>
 
                 </View>
