@@ -16,6 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import auth from '@react-native-firebase/auth';
 import {AuthContext} from '../../../../contextFiles/context'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 SettingsScreen = ({navigation})=> {
 
@@ -77,7 +78,26 @@ const updateConfirmSecureTextEntry = () => {
   <View style={{padding:'2%',flex:1}}>
      
                       <View style={styles.header}>
-                          <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update password</Text>
+
+                          <View>
+                          <Icon.Button 
+                                name="ios-menu"
+                                size={25}
+                                onPress={()=>navigation.openDrawer()}
+                                backgroundColor="#009387"
+                            >
+                            </Icon.Button>
+
+                          </View>
+
+                          <View>
+
+                             <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update password</Text>
+                          </View>
+
+               
+
+
                       </View>
 
 
@@ -205,7 +225,8 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       paddingHorizontal: 20,
       paddingBottom: 50,
-      backgroundColor: '#009387'
+      backgroundColor: '#009387',
+      flexDirection: "row"
   },
   footer: {
       flex: 3,

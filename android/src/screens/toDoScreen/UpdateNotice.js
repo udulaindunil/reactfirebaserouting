@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
+
 const usersCollection = firestore().collection('notices');
 
 UpdateNoticeScreen = ({navigation,route})=> {
@@ -104,6 +105,9 @@ UpdateNoticeScreen = ({navigation,route})=> {
           setTimeout(()=>{
             setResponse('Notice Updated!');
           },1000)
+
+          setImage('');
+
         },error=>{
           Alert.alert('oops!','Something went wrong',
           [{text:'understodd',onPress:()=> console.log('alert closed')
@@ -128,9 +132,27 @@ UpdateNoticeScreen = ({navigation,route})=> {
     <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
          <ScrollView style={styles.container}>
            <View style={styles.header}>
+      <View>
+      <Icon2.Button 
+                    name="ios-menu"
+                    size={25}
+                    onPress={()=>navigation.openDrawer()}
+                    backgroundColor="#009387"
+                 >
+                </Icon2.Button>
+      </View>
+
+      <View>
+
                 <Text style={styles.text_header}>
                   Update Notice
                 </Text>
+
+      </View>
+           
+
+
+                
            </View>
 
           <View style={styles.noteInput}>
@@ -292,6 +314,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       paddingHorizontal: 4,
       backgroundColor: '#009387',
+      flexDirection: 'row'
   },
   footer: {
       flex: 3,

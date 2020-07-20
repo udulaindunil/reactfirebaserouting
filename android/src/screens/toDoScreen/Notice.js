@@ -56,7 +56,7 @@ function Notice({item,navigation,history}){
                     <View style={{flexDirection:'row',justifyContent: 'space-between',}}>
                         <View style={{flex:4}}>
                             <TouchableOpacity
-                                onPress={()=>{navigation.navigate('NoticeCommentsScreen',item)}}
+                                onPress={()=>{navigation.navigate('UpdateNoticeScreen',item)}}
                                 >
                                     <View style={styles.notice}>
                                         <Text style={styles.notice}>{item.notice}</Text>

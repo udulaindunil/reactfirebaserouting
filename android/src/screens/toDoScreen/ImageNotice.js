@@ -35,7 +35,6 @@ function ImageNotice({notice,navigation}){
                                 </LinearGradient>
                         </TouchableOpacity>
                         </View>
-  
         </View>
     );
 

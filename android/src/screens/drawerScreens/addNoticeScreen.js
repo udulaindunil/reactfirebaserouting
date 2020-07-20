@@ -26,6 +26,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons'
 
 
 
+
 const usersCollection = firestore().collection('notices')
 
 
@@ -122,6 +123,8 @@ AddNoticeScreen = ({navigation})=> {
               setTimeout(()=>{
                 setResponse('Notice added!');
               },1000);
+              setNotice();
+              setImage('');
             },error=>{
               Alert.alert('oops!','Something went wrong',
               [{text:'understodd',onPress:()=> console.log('alert closed')
@@ -150,8 +153,23 @@ AddNoticeScreen = ({navigation})=> {
 
    
          <ScrollView style={styles.container}>
+
+          
+
               <View style={styles.header}>
-                  <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update Notices</Text>
+
+                <View>
+                <Icon2.Button 
+                    name="ios-menu"
+                    size={25}
+                    onPress={()=>navigation.openDrawer()}
+                    backgroundColor="#009387"
+                 >
+                </Icon2.Button>
+                </View>
+                <View>
+                  <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>New Notices</Text>
+                </View>
               </View>
 
           <View style={styles.noteInput}>
@@ -166,6 +184,7 @@ AddNoticeScreen = ({navigation})=> {
                             color="#05375a"
                             size={20}/>
                         <TextInput
+                            value={notice}
                             multiline={true}
                             numberOfLines={12}
                             placeholder="Your Notice"
@@ -302,6 +321,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       paddingHorizontal: 20,
       backgroundColor: '#009387',
+      flexDirection: "row"
   },
   footer: {
       flex: 3,

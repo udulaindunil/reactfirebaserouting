@@ -6,6 +6,7 @@ import {FlatList} from 'react-native'
 import Todos from '../toDoScreen/Todos'
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 BookMarkScreen = ({ navigation, route })=> {
  
@@ -40,7 +41,19 @@ BookMarkScreen = ({ navigation, route })=> {
   return (
       <>
       <View style={styles.header}>
-      <Text style={{color:'#fff'}}>My Tasks</Text>
+          <View>
+
+          <Icon.Button 
+                    name="ios-menu"
+                    size={25}
+                    onPress={()=>navigation.openDrawer()}
+                    backgroundColor="#009387"
+                 >
+                </Icon.Button>
+          </View>
+        <View>
+                <Text style={{color:'#fff'}}>My Tasks</Text>
+        </View>
       </View>
       <FlatList
           style={{flex: 1,width:'100%'}}
@@ -87,6 +100,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 20,
         backgroundColor:'#009387',
+        flexDirection: "row"
     },
     signIn: {
         width: '100%',

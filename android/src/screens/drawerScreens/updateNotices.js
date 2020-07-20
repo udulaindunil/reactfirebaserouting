@@ -10,6 +10,7 @@ import {
 import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import Notice from '../toDoScreen/Notice'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 
@@ -50,7 +51,20 @@ UpdateNoticesScreen = ({navigation})=> {
     <>
 
       <View style={styles.header}>
+
+        <View>
+
+        <Icon.Button 
+                    name="ios-menu"
+                    size={25}
+                    onPress={()=>navigation.openDrawer()}
+                    backgroundColor="#009387"
+                 >
+                </Icon.Button>
+        </View>
+        <View>
           <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update Notices</Text>
+        </View>
       </View>
 
     <View style={styles.container}>
@@ -81,6 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 26,
     backgroundColor:'#009387',
+    flexDirection: "row"
 },
   container:{
     width:'100%',

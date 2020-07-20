@@ -13,6 +13,7 @@ import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import moment from 'moment'
 import LinearGradient from 'react-native-linear-gradient';
 import ImageNotice from '../toDoScreen/ImageNotice';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 
@@ -49,7 +50,21 @@ NoticeImageScreen = ({navigation,route})=> {
   return (
     <>
         <View style={styles.header}>
-          <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Notice</Text>
+      <View>
+
+      <Icon.Button 
+                    name="ios-menu"
+                    size={25}
+                    onPress={()=>navigation.openDrawer()}
+                    backgroundColor="#009387"
+                 >
+                </Icon.Button>
+      </View>
+      <View>
+      <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Notice</Text>
+      </View>
+
+          
       </View>
       <View style={styles.container}>
         <View>
@@ -75,6 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 26,
     backgroundColor:'#009387',
+    flexDirection: "row"
 },
   container:{
     width:'100%',

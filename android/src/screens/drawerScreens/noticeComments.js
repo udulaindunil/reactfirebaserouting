@@ -12,6 +12,7 @@ import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import moment from 'moment'
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 NoticeCommentsScreen = ({navigation,route})=> {
@@ -52,7 +53,21 @@ NoticeCommentsScreen = ({navigation,route})=> {
     <>
 
       <View style={styles.header}>
+
+    <View style={{alignContent:"flex-start"}}>
+
+    
+                <Icon.Button 
+                    name="ios-menu"
+                    size={25}
+                    onPress={()=>navigation.openDrawer()}
+                    backgroundColor="#009387"
+                 >
+                </Icon.Button>
+      </View>
+      <View>
           <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Comments</Text>
+      </View>
       </View>
 
     <View style={styles.container}>
@@ -93,6 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 26,
     backgroundColor:'#009387',
+    flexDirection: "row",
 },
   container:{
     width:'100%',
