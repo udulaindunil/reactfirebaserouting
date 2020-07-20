@@ -7,67 +7,126 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  ScrollView,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard, ImageBackground
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import { UserDetails } from '../../../../contextFiles/userDetailsContext'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon2 from 'react-native-vector-icons/Ionicons'
+import ImagePicker from 'react-native-image-crop-picker';
+import storage from '@react-native-firebase/storage';
 const usersCollection = firestore().collection('notices');
 
 UpdateNoticeScreen = ({navigation,route})=> {
     const initNotice= route.params.notice;
+    const initImageUrl =  route.params.imageUrl;
     const id = route.params.key;
     const userDetails = useContext(UserDetails);
-    console.log(initNotice);
-    
+     
     const [notice, setNotice] = useState(initNotice)
     const [response,setResponse] = useState('')
+    const [imageUrl, setImageUrl] = useState(initImageUrl)
+    const [image, setImage] = useState();
     
     useEffect(() => {
         setNotice(initNotice);
+        setImageUrl(initImageUrl);
       }, []);
 
-  function publishNotice(){
-      if(notice.length > 4){
+    
 
-        var ts = new Date();
-        console.log(ts.toISOString());
-        var date = ts.toISOString();
-        console.log(notice);
-        usersCollection.doc(id).update({ 
-        notice: notice,
-        date: date,
-        role: userDetails.role,
-        uid: userDetails.userId,
-        author: userDetails.name,
-        state: "active",
-      })  
-      .then(() => {
-        console.log("Notice Added");
-        setTimeout(()=>{
-          setResponse('Notice Updated!');
-        },1000)
-      },error=>{
-        Alert.alert('oops!','Something went wrong',
-        [{text:'understodd',onPress:()=> console.log('alert closed')
-        }])
-      });
 
-      }else{
-        Alert.alert('Opps!','Notice should be over 4 characters long',[
-            {text:'Unserstood', onPress:()=>console.log("alrert closed")
-            }
-        ])
+      const takePhotoFromCamera = () => {
+        ImagePicker.openCamera({
+          compressImageMaxWidth: 300,
+          compressImageMaxHeight: 300,
+          cropping: true,
+          compressImageQuality: 0.7
+        }).then(image => {
+          console.log(image);
+          setImage(image.path);
+          this.bs.current.snapTo(1);
+        });
       }
+    
+      const choosePhotoFromLibrary = () => {
+        ImagePicker.openPicker({
+          width: 300,
+          height: 300,
+          cropping: true,
+          compressImageQuality: 0.7
+        }).then(image => {
+          console.log(image);
+          setImage(image.path);
+          this.bs.current.snapTo(1);
+        });
+      }
+    
+      const removeImage = () => {
+        setImage('');
+      }
+
+
+  function publishNotice(){
+
+
+    const reference = storage().ref(`notices/${image}`);
+    const task = reference.putFile(image)
+    task.on('state_changed', taskSnapshot => {
+      console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
+    });
+
+    task.then(() => {
+      task.snapshot.ref.getDownloadURL().then(res=>{
+
+
+        if(notice.length > 4){
+
+          var ts = new Date();
+          console.log(ts.toISOString());
+          var date = ts.toISOString();
+          console.log(notice);
+          usersCollection.doc(id).update({ 
+          notice: notice,
+          date: date,
+          role: userDetails.role,
+          uid: userDetails.userId,
+          author: userDetails.name,
+          imageUrl: res,
+          state: "active",
+        })  
+        .then(() => {
+          console.log("Notice Added");
+          setTimeout(()=>{
+            setResponse('Notice Updated!');
+          },1000)
+        },error=>{
+          Alert.alert('oops!','Something went wrong',
+          [{text:'understodd',onPress:()=> console.log('alert closed')
+          }])
+        });
+  
+        }else{
+          Alert.alert('Opps!','Notice should be over 4 characters long',[
+              {text:'Unserstood', onPress:()=>console.log("alrert closed")
+              }
+          ])
+        }
+
+
+
+      });})
 
   
 }
 
   return (
     <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
-         <View style={styles.container}>
+         <ScrollView style={styles.container}>
            <View style={styles.header}>
                 <Text style={styles.text_header}>
                   Update Notice
@@ -94,6 +153,85 @@ UpdateNoticeScreen = ({navigation,route})=> {
                             />
 
           </View>
+
+
+          <Text style={styles.text_footer}>
+                        Upload Notice Image
+          </Text>
+
+          <View>
+            <View style={{flexDirection:"row",justifyContent: 'space-evenly',}}>
+            <ImageBackground
+                      source={{
+                        uri: imageUrl,
+                      }}
+                      style={{height: 120, width: 120}}
+                      imageStyle={{borderRadius: 15}}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                      </View>
+                    </ImageBackground>
+
+                    <ImageBackground
+                      source={{
+                        uri: image,
+                      }}
+                      style={{height: 120, width: 120}}
+                      imageStyle={{borderRadius: 15}}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Icon
+                          name="camera"
+                          size={35}
+                          color="#009387"
+                          style={{
+                            opacity: 0.7,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderWidth: 1,
+                            borderColor: '#009387',
+                            borderRadius: 10,
+                          }}
+                        />
+                      </View>
+                    </ImageBackground>
+            </View>
+
+          <View style={styles.panel}>
+         
+            <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
+            <Icon2 name="ios-camera" color="#fff" size={26} />
+              <Text style={styles.panelButtonTitle}>Take Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
+            <Icon2 name="ios-images" color="#fff" size={26} />
+              <Text style={styles.panelButtonTitle}>Gallery</Text>
+            </TouchableOpacity>
+
+            
+            <TouchableOpacity
+              style={styles.panelButton}
+              onPress={removeImage}>
+                <Icon2 name="ios-close-circle" color="#fff" size={26} />
+              <Text style={styles.panelButtonTitle}>Cancel</Text>
+            </TouchableOpacity>
+
+            </View>
+
+            <View >
+            
+          </View>
+                          
+          </View>
+
 
           <View style={{alignContent:"center"}}>
               <Text style={{textAlign:"center",color:'green'}}>
@@ -137,7 +275,7 @@ UpdateNoticeScreen = ({navigation,route})=> {
 
                         </View>
             
-          </View>
+          </ScrollView>
           </TouchableWithoutFeedback>
   );
 };
@@ -152,7 +290,7 @@ const styles = StyleSheet.create({
   },
   header: {
       alignItems: "center",
-      paddingHorizontal: 20,
+      paddingHorizontal: 4,
       backgroundColor: '#009387',
   },
   footer: {
@@ -220,5 +358,21 @@ const styles = StyleSheet.create({
   butonSet:{
     alignItems: "center",
     justifyContent: 'center',
-  }
+  },
+  panelButton: {
+    flex: 1,
+    borderRadius: 10,
+    backgroundColor: '#009387',
+    alignItems: 'center',
+  },
+  panel:{
+    marginTop: '4%',
+    flexDirection: 'row',
+    backgroundColor: '#fff'
+  },
+  panelButtonTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: 'white',
+  },
 });

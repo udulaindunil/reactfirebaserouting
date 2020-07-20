@@ -45,24 +45,31 @@ function PublicNotices({item,navigation}){
             style={styles.noticeElement}>
 
 
-                    <View style={{flexDirection:'row'}}>
+                    <View style={{flexDirection:'row',justifyContent: 'space-between',}}>
+                        <View style={{flex:4}}>
+
+                        
                             <TouchableOpacity
                                 onPress={()=>{navigation.navigate('NoticeCommentsScreen',item)}}
                                 >
                                     <View style={styles.notice}>
-    <Text style={styles.notice}>{item.notice}</Text>
+                                        <Text style={styles.notice}>{item.notice}</Text>
                                     </View>
                             </TouchableOpacity>
+                            </View>
+                        <View style={{flex:1}}>
+
+                        
 
                             <TouchableOpacity
-                                onPress={()=>{navigation.navigate('NoticeCommentsScreen',item)}}
+                                onPress={()=>{navigation.navigate('NoticeImageScreen',item)}}
                                 >   
 
                     <ImageBackground
                       source={{
                         uri: `${item.imageUrl}`,
                       }}
-                      style={{height: 120, width: 120}}
+                      style={{height: 50, width: 50,alignContent:"flex-end"}}
                       imageStyle={{borderRadius: 15}}>
                       <View
                         style={{
@@ -73,7 +80,7 @@ function PublicNotices({item,navigation}){
                       </View>
                     </ImageBackground>
                             </TouchableOpacity>
-
+                            </View>
 
                             </View>
 
@@ -111,6 +118,17 @@ const styles = StyleSheet.create({
       alignContent: "center",
       textAlign: "justify",
     },
+    panelButton: {
+        flex: 1,
+        borderRadius: 10,
+        backgroundColor: '#009387',
+        alignItems: 'center',
+      },
+      panelButtonTitle: {
+        fontSize: 10,
+        fontWeight: 'bold',
+        color: 'white',
+      },
     details: {
         flex: 1,
         flexDirection: 'row', 

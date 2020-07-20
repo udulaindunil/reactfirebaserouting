@@ -196,6 +196,8 @@ function App() {
                     <Drawer.Screen name="NoticeHistoryScreen" component={NoticeHistoryScreen} />
                     <Drawer.Screen name="NoticeImageScreen" component={NoticeImageScreen} />
                     
+                    
+                    
                     {/*  */}
                     
                   </Drawer.Navigator>
