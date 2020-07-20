@@ -12,6 +12,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SupportScreen from './drawerScreens/addNoticeScreen';
 import UpdateNoticesScreen from './drawerScreens/updateNotices';
+import AddNoticesScreen from './drawerScreens/addNoticeScreen';
+
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -24,7 +26,7 @@ const MainTabsScreen = ()=>{
       >
         <Tab.Screen
           name="Home"
-          component={homeStackScreen}   // here U need to set home screen
+          component={homeStackScreen}   // here U need to set home screen ()homestackscreen
           options={{
             tabBarLabel: 'Home',
             tabBarColor: '#009387',

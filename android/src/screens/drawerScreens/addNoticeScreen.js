@@ -8,7 +8,9 @@ import {
   TextInput,
   Alert,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  ScrollView,
+  ImageBackground,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
@@ -16,45 +18,107 @@ import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment'
 import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 
+import {useTheme} from 'react-native-paper';
+import storage from '@react-native-firebase/storage';
+import ImagePicker from 'react-native-image-crop-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon2 from 'react-native-vector-icons/Ionicons'
 
-const usersCollection = firestore().collection('notices');
+
+
+const usersCollection = firestore().collection('notices')
 
 
 AddNoticeScreen = ({navigation})=> {
 
+
+  const [image, setImage] = useState();
+  const {colors} = useTheme();
   const userDetails = useContext(UserDetails);  
   const [notice,setNotice] = useState('');
-  const [response,setResponse] = useState('')
+  const [response,setResponse] = useState('');
+  const [imageUrl, setImageUrl] = useState('')
+
+
+  const takePhotoFromCamera = () => {
+    ImagePicker.openCamera({
+      compressImageMaxWidth: 300,
+      compressImageMaxHeight: 300,
+      cropping: true,
+      compressImageQuality: 0.7
+    }).then(image => {
+      console.log(image);
+      setImage(image.path);
+      this.bs.current.snapTo(1);
+    });
+  }
+
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+      compressImageQuality: 0.7
+    }).then(image => {
+      console.log(image);
+      setImage(image.path);
+      this.bs.current.snapTo(1);
+    });
+  }
+
+  const removeImage = () => {
+    setImage('');
+  }
+
+  const dataRecord = ()=>{      
+
+        const reference = storage().ref(`notices/${image}`);
+        const task = reference.putFile(image)
+           task.on('state_changed', taskSnapshot => {
+          console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
+        });
+
+        task.then(() => {
+          task.snapshot.ref.getDownloadURL().then(res=>{
+            setImageUrl(res);
+            var ts = new Date();
+            console.log(ts.toISOString());
+            var date = ts.toISOString();
+            
+              usersCollection.add({ 
+                notice: notice,
+                date: date,
+                role: userDetails.role,
+                uid: userDetails.userId,
+                author: userDetails.name,
+                state: "active",
+                imageUrl: imageUrl
+              })  
+              .then(() => {
+                console.log("Notice Added");
+                
+                setTimeout(()=>{
+                  setResponse('Notice added!');
+                },1000);
+              },error=>{
+                Alert.alert('oops!','Something went wrong',
+                [{text:'understodd',onPress:()=> console.log('alert closed')
+                }])
+              })
+          })
+          console.log('Image uploaded to the bucket!');
+        });
+  }
 
   function publishNotice(){
     if(notice.length > 4){
-    var ts = new Date();
-    console.log(ts.toISOString());
-    var date = ts.toISOString();
-    usersCollection.add({ 
-    notice: notice,
-    date: date,
-    role: userDetails.role,
-    uid: userDetails.userId,
-    author: userDetails.name,
-    state: "active",
-  })  
-  .then(() => {
-    console.log("Notice Added");
-    
-    setTimeout(()=>{
-      setResponse('Notice added!');
-    },1000);
-  },error=>{
-    Alert.alert('oops!','Something went wrong',
-    [{text:'understodd',onPress:()=> console.log('alert closed')
-    }])
-  });
-}else{
-  Alert.alert('Opps!','Notice should be over 4 characters long',[
-      {text:'Unserstood', onPress:()=>console.log("alrert closed")
-      }
-  ])
+      Alert.alert('Publish now','Are you sure, You want to permanantly delete this notice',
+      [{text:'Confirm', onPress:()=>{dataRecord()}},{text:'Not now', onPress:()=>{}}]);
+    }else{
+    Alert.alert('Opps!','Notice should be over 4 characters long',[
+        {text:'Unserstood', onPress:()=>console.log("alrert closed")
+        }
+    ])
 }
 }
 
@@ -62,7 +126,7 @@ AddNoticeScreen = ({navigation})=> {
     <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
 
    
-         <View style={styles.container}>
+         <ScrollView style={styles.container}>
               <View style={styles.header}>
                   <Text style={{color:'#fff',fontSize:26, fontWeight:"bold"}}>Update Notices</Text>
               </View>
@@ -70,8 +134,10 @@ AddNoticeScreen = ({navigation})=> {
           <View style={styles.noteInput}>
           <Text style={styles.text_footer}>
                         Notice
-                    </Text>
+          </Text>
+                    
                     <View style={styles.action}>
+                      
                         <FontAwesome 
                             name="user-o"
                             color="#05375a"
@@ -84,13 +150,84 @@ AddNoticeScreen = ({navigation})=> {
                             autoCapitalize="none"
                             onChangeText={(val) => setNotice(val)}
                             />
+                      </View>
+
+
+          <View style={{alignItems:"center",marginTop:'10%'}}>
+          </View>
+          
+
+     
+          <Text style={styles.text_footer}>
+                        Upload Notice Image
+          </Text>
+
+          <View>
+            <View style={{alignContent:"center",alignItems:"center"}}>
+            <ImageBackground
+                      source={{
+                        uri: image,
+                      }}
+                      style={{height: 120, width: 120}}
+                      imageStyle={{borderRadius: 15}}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Icon
+                          name="camera"
+                          size={35}
+                          color="#009387"
+                          style={{
+                            opacity: 0.7,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderWidth: 1,
+                            borderColor: '#009387',
+                            borderRadius: 10,
+                          }}
+                        />
+                      </View>
+                    </ImageBackground>
+            </View>
+
+          <View style={styles.panel}>
+         
+            <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
+            <Icon2 name="ios-camera" color="#fff" size={26} />
+              <Text style={styles.panelButtonTitle}>Take Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
+            <Icon2 name="ios-images" color="#fff" size={26} />
+              <Text style={styles.panelButtonTitle}>Gallery</Text>
+            </TouchableOpacity>
+
+            
+            <TouchableOpacity
+              style={styles.panelButton}
+              onPress={removeImage}>
+                <Icon2 name="ios-close-circle" color="#fff" size={26} />
+              <Text style={styles.panelButtonTitle}>Cancel</Text>
+            </TouchableOpacity>
+
+            </View>
+
+            <View >
+            
+          </View>
+                          
+          </View>
 
           </View>
+
+
           <View style={{alignContent:"center"}}>
             <Text style={{color:'green',textAlign:"center"}}>{response}</Text>
           </View>
-          
-          </View>
+
+
                         <View style={styles.butonSet}>
 
                                   <TouchableOpacity
@@ -125,7 +262,7 @@ AddNoticeScreen = ({navigation})=> {
 
                         </View>
             
-          </View>
+          </ScrollView>
       </TouchableWithoutFeedback>
   );
 };
@@ -167,6 +304,10 @@ const styles = StyleSheet.create({
       borderBottomColor: '#f2f2f2',
       paddingBottom: 5
   },
+  panel:{
+    flexDirection: 'row',
+    backgroundColor: '#fff'
+  },
   actionError: {
       flexDirection: 'row',
       marginTop: 10,
@@ -179,9 +320,20 @@ const styles = StyleSheet.create({
       paddingLeft: 10,
       color: '#05375a',
   },
+  panelButton: {
+    flex: 1,
+    borderRadius: 10,
+    backgroundColor: '#009387',
+    alignItems: 'center',
+  },
+  panelButtonTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: 'white',
+  },
 
   noteInput:{
-    marginTop: '15%',
+    marginTop: '5%',
     padding:'8%',
   },
   errorMsg: {
