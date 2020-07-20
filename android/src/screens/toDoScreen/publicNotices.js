@@ -47,8 +47,6 @@ function PublicNotices({item,navigation}){
 
                     <View style={{flexDirection:'row',justifyContent: 'space-between',}}>
                         <View style={{flex:4}}>
-
-                        
                             <TouchableOpacity
                                 onPress={()=>{navigation.navigate('NoticeCommentsScreen',item)}}
                                 >
@@ -56,33 +54,32 @@ function PublicNotices({item,navigation}){
                                         <Text style={styles.notice}>{item.notice}</Text>
                                     </View>
                             </TouchableOpacity>
-                            </View>
-                        <View style={{flex:1}}>
-
+                        </View>
                         
+                        <View style={{flex:1}}>
 
                             <TouchableOpacity
                                 onPress={()=>{navigation.navigate('NoticeImageScreen',item)}}
                                 >   
 
-                    <ImageBackground
-                      source={{
-                        uri: `${item.imageUrl}`,
-                      }}
-                      style={{height: 50, width: 50,alignContent:"flex-end"}}
-                      imageStyle={{borderRadius: 15}}>
-                      <View
-                        style={{
-                          flex: 1,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                      </View>
-                    </ImageBackground>
+                                        <ImageBackground
+                                        source={{
+                                            uri: `${item.imageUrl}`,
+                                        }}
+                                        style={{height: 50, width: 50,alignContent:"flex-end"}}
+                                        imageStyle={{borderRadius: 15}}>
+                                        <View
+                                            style={{
+                                            flex: 1,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            }}>
+                                        </View>
+                                        </ImageBackground>
                             </TouchableOpacity>
-                            </View>
+                        </View>
 
-                            </View>
+                    </View>
 
                             <View style={styles.details}>
                                 <Text style={styles.detailsText}>{item.author}</Text>

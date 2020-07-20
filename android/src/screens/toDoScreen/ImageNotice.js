@@ -22,7 +22,7 @@ function ImageNotice({notice,navigation}){
         <View style={{alignContent:"center",padding:'8%'}}>
                 <TouchableOpacity
                             style={styles.signIn}
-                            onPress={()=>navigation.navigate('HomeDrawer')}
+                            onPress={()=>navigation.goBack()}
                         >
                                 <LinearGradient
                                     colors={['#08d4c4', '#01ab9d']}
@@ -30,7 +30,7 @@ function ImageNotice({notice,navigation}){
                                     >
                                     <Text    
                                         style={[styles.textSign, {color:'#fff'}]}>
-                                                Home
+                                                Back
                                     </Text>
                                 </LinearGradient>
                         </TouchableOpacity>
