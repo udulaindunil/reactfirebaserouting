@@ -37,7 +37,7 @@ AddNoticeScreen = ({navigation})=> {
   const userDetails = useContext(UserDetails);  
   const [notice,setNotice] = useState('');
   const [response,setResponse] = useState('');
-  const [imageUrl, setImageUrl] = useState('')
+  const [imageUrl, setImageUrl] = useState()
 
 
   const takePhotoFromCamera = () => {
@@ -70,41 +70,64 @@ AddNoticeScreen = ({navigation})=> {
     setImage('');
   }
 
-  const dataRecord = ()=>{      
 
+  // const dataSave=()=>{
+  //   var ts = new Date();
+  //   console.log(ts.toISOString());
+  //   var date = ts.toISOString();
+  //   console.log(imageUrl);
+  //             usersCollection.add({ 
+  //               notice: notice,
+  //               date: date,
+  //               role: userDetails.role,
+  //               uid: userDetails.userId,
+  //               author: userDetails.name,
+  //               imageUrl: imageUrl,
+  //               state: "active",
+  //             }).then(() => {
+  //               console.log("Notice Added");
+  //               setTimeout(()=>{
+  //                 setResponse('Notice added!');
+  //               },1000);
+  //             },error=>{
+  //               Alert.alert('oops!','Something went wrong',
+  //               [{text:'understodd',onPress:()=> console.log('alert closed')
+  //               }])
+  //             })
+
+  // }
+
+  const dataRecord = ()=>{      
         const reference = storage().ref(`notices/${image}`);
         const task = reference.putFile(image)
-           task.on('state_changed', taskSnapshot => {
+        task.on('state_changed', taskSnapshot => {
           console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
         });
-
+        
         task.then(() => {
           task.snapshot.ref.getDownloadURL().then(res=>{
-            setImageUrl(res);
+
             var ts = new Date();
-            console.log(ts.toISOString());
             var date = ts.toISOString();
-            
-              usersCollection.add({ 
-                notice: notice,
-                date: date,
-                role: userDetails.role,
-                uid: userDetails.userId,
-                author: userDetails.name,
-                state: "active",
-                imageUrl: imageUrl
-              })  
-              .then(() => {
-                console.log("Notice Added");
-                
-                setTimeout(()=>{
-                  setResponse('Notice added!');
-                },1000);
-              },error=>{
-                Alert.alert('oops!','Something went wrong',
-                [{text:'understodd',onPress:()=> console.log('alert closed')
-                }])
-              })
+            usersCollection.add({ 
+              notice: notice,
+              date: date,
+              role: userDetails.role,
+              uid: userDetails.userId,
+              author: userDetails.name,
+              imageUrl: res,
+              state: "active",
+            }).then(() => {
+              console.log("Notice Added");
+              setTimeout(()=>{
+                setResponse('Notice added!');
+              },1000);
+            },error=>{
+              Alert.alert('oops!','Something went wrong',
+              [{text:'understodd',onPress:()=> console.log('alert closed')
+              }])
+            })
+
           })
           console.log('Image uploaded to the bucket!');
         });

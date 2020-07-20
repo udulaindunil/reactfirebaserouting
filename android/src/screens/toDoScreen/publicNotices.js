@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text,StyleSheet,TouchableOpacity, Image,ImageBackground } from 'react-native';
 import { List } from 'react-native-paper';
 import Swipeout from 'react-native-swipeout';
 import firestore from '@react-native-firebase/firestore';
@@ -44,14 +44,38 @@ function PublicNotices({item,navigation}){
             colors={['#11f7e5', '#08ab9d']}
             style={styles.noticeElement}>
 
+
+                    <View style={{flexDirection:'row'}}>
                             <TouchableOpacity
                                 onPress={()=>{navigation.navigate('NoticeCommentsScreen',item)}}
                                 >
                                     <View style={styles.notice}>
-                                        <Text style={styles.notice}>{item.notice}</Text>
+    <Text style={styles.notice}>{item.notice}</Text>
                                     </View>
                             </TouchableOpacity>
 
+                            <TouchableOpacity
+                                onPress={()=>{navigation.navigate('NoticeCommentsScreen',item)}}
+                                >   
+
+                    <ImageBackground
+                      source={{
+                        uri: `${item.imageUrl}`,
+                      }}
+                      style={{height: 120, width: 120}}
+                      imageStyle={{borderRadius: 15}}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                      </View>
+                    </ImageBackground>
+                            </TouchableOpacity>
+
+
+                            </View>
 
                             <View style={styles.details}>
                                 <Text style={styles.detailsText}>{item.author}</Text>
