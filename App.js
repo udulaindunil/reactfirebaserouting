@@ -28,11 +28,43 @@ import {AuthContext } from './contextFiles/context';
 import {UserDetails } from './contextFiles/userDetailsContext';
 import firestore from "@react-native-firebase/firestore"
 import auth from '@react-native-firebase/auth';
+// import PushNotification from "@react-native-community/push-notification-ios";
+var PushNotification = require("react-native-push-notification");
 export const userDetailsContext = React.createContext();
 
 const Drawer = createDrawerNavigator();
 
 function App() {
+
+  PushNotification.configure({
+    onRegister: function (token) {
+      console.log("TOKEN:", token);
+    },
+
+    onNotification: function (notification) {
+      console.log("NOTIFICATION:", notification);
+  
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+    },
+
+    onAction: function (notification) {
+      console.log("ACTION:", notification.action);
+      console.log("NOTIFICATION:", notification);
+
+    },
+
+    onRegistrationError: function(err) {
+      console.error(err.message, err);
+    },
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+    popInitialNotification: true,
+
+    requestPermissions: true,
+  });
 
   const [isLoading, setIsLoading] = useState('');
   const [error,setError] = useState('');
@@ -155,6 +187,9 @@ function App() {
   }));
 
   useEffect(() => {
+
+
+
     setTimeout(()=>{
 
       // for testing 
@@ -167,6 +202,12 @@ function App() {
       // userId = null
       // dispatch({type:'RETRIVE_TOKEN', uid :userId});
     },1000);
+
+    PushNotification.localNotification({
+      title: "My Notification Title", // (optional)
+      message: "My Notification Message", // (required)
+    });
+
   }, []);
 
 

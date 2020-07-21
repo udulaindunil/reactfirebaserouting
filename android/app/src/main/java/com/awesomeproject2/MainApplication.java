@@ -11,6 +11,8 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.BV.LinearGradient.LinearGradientPackage; 
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;  // <--- Import Package
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -29,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           packages.add(new LinearGradientPackage());
           // packages.add(new MainReactPackage());
+          packages.add(new ReactNativePushNotificationPackage());
           return packages;
         }
 
