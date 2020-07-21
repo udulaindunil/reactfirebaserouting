@@ -12,7 +12,7 @@ import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import moment from 'moment'
 import LinearGradient from 'react-native-linear-gradient';
-import ImageNotice from '../toDoScreen/ImageNotice';
+import ImageNotice from '../components/ImageNotice';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 

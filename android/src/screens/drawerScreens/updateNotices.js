@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../contextFiles/userDetailsContext';
-import Notice from '../toDoScreen/Notice'
+import Notice from '../components/Notice'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 

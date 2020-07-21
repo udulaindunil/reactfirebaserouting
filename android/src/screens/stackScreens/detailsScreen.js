@@ -9,7 +9,7 @@ import {
 
 } from 'react-native';
 
-import Members from '../toDoScreen/members';
+import Members from '../components/members';
 import firestore from "@react-native-firebase/firestore"
 
 DetailsScreen = ({navigation}) => {

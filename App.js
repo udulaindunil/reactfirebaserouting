@@ -15,8 +15,8 @@ import AddNoticeScreen from './android/src/screens/drawerScreens/addNoticeScreen
 import SettingsScreen from './android/src/screens/drawerScreens/settingsScreen';
 import BookMarkScreen from './android/src/screens/drawerScreens/boockMarkScreen';
 import UpdateNoticesScreen from './android/src/screens/drawerScreens/updateNotices';
-import UpdateNoticeScreen from './android/src/screens/toDoScreen/UpdateNotice';
-import CommentNoticeScreen from './android/src/screens/toDoScreen/commentNotice';
+import UpdateNoticeScreen from './android/src/screens/components/UpdateNotice';
+import CommentNoticeScreen from './android/src/screens/components/commentNotice';
 import NoticeCommentsScreen from './android/src/screens/drawerScreens/noticeComments';
 import NoticeHistoryScreen from './android/src/screens/drawerScreens/noticeHistoryScreen';
 import NoticeImageScreen from './android/src/screens/drawerScreens/noticeImageScreen';

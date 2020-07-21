@@ -10,7 +10,7 @@ import {
 
 import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../contextFiles/userDetailsContext';
-import  PublicNotices  from '../toDoScreen/publicNotices';
+import  PublicNotices  from '../components/publicNotices';
 
 
 HomeScreen = ({navigation})=> {
