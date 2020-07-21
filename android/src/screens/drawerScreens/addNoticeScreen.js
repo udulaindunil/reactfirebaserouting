@@ -23,7 +23,7 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons'
-
+var PushNotification = require("react-native-push-notification");
 
 
 
@@ -119,6 +119,12 @@ AddNoticeScreen = ({navigation})=> {
               imageUrl: res,
               state: "active",
             }).then(() => {
+
+              PushNotification.localNotification({
+                title: "New Notice Added", // (optional)
+                message: notice, // (required)
+              });
+
               console.log("Notice Added");
               setTimeout(()=>{
                 setResponse('Notice added!');

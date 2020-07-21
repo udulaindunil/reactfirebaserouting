@@ -203,10 +203,7 @@ function App() {
       // dispatch({type:'RETRIVE_TOKEN', uid :userId});
     },1000);
 
-    PushNotification.localNotification({
-      title: "My Notification Title", // (optional)
-      message: "My Notification Message", // (required)
-    });
+
 
   }, []);
 

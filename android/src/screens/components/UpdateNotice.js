@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons'
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
+var PushNotification = require("react-native-push-notification");
 
 const usersCollection = firestore().collection('notices');
 
@@ -101,6 +102,10 @@ UpdateNoticeScreen = ({navigation,route})=> {
           state: "active",
         })  
         .then(() => {
+          PushNotification.localNotification({
+            title: "Notice Updated ", // (optional)
+            message: notice, // (required)
+          });
           console.log("Notice Added");
           setTimeout(()=>{
             setResponse('Notice Updated!');
