@@ -11,6 +11,8 @@ import firestore from "@react-native-firebase/firestore"
 import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import Notice from '../components/Notice'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 
@@ -77,10 +79,22 @@ UpdateNoticesScreen = ({navigation})=> {
     />
     
     </View>
-    <View style={styles.intro}>
-      <Text>For Update touch the notice</Text>
-      <Text>For delete wipe from the right to left</Text>
-    </View>
+    <View style={{alignContent:"center",padding:'8%'}}>
+                <TouchableOpacity
+                            style={styles.signIn}
+                            onPress={()=>navigation.goBack()}
+                        >
+                                <LinearGradient
+                                    colors={['#08d4c4', '#01ab9d']}
+                                    style={styles.signIn}
+                                    >
+                                    <Text    
+                                        style={[styles.textSign, {color:'#fff'}]}>
+                                                Back
+                                    </Text>
+                                </LinearGradient>
+                        </TouchableOpacity>
+                        </View>
   </>
   );
 };
@@ -104,6 +118,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff"
   },
+  signIn: {
+    padding: '5%',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+},
+textSign: {
+    fontSize: 18,
+    fontWeight: 'bold'
+},
+
   b:{
    color:"blue"
   },

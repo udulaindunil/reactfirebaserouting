@@ -98,6 +98,7 @@ function App() {
           username: action.username,
           name: action.name,
           isLoading : false,
+          profileImage: action.profileImage
         };
 
       case 'SIGNUP':
@@ -153,9 +154,10 @@ function App() {
              let role=documentSnapshot.data().role;
              let username=documentSnapshot.data().username;
              let name=documentSnapshot.data().name;
+             let profileImage= documentSnapshot.data().profileImage;
              
              console.log(role);
-             dispatch({type:'SIGNIN',email:res.user.email, uid :res.user.uid, role:role,username:username,name:name});
+             dispatch({type:'SIGNIN',email:res.user.email, uid :res.user.uid, role:role,username:username,name:name,profileImage:profileImage});
           });
         });
       },error=>{
@@ -194,7 +196,7 @@ function App() {
 
       // for testing 
       authContext.signIn('udulaindunil@gmail.com','123456')
-      // authContext.signIn('shenal@gmail.com','123456')
+      // authContext.signIn('shenal@gmail.com','1234567')
       
       // this under code is for orginal
       // setIsLoading(false);

@@ -13,6 +13,7 @@ import { UserDetails } from '../../../../contextFiles/userDetailsContext';
 import moment from 'moment'
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 NoticeCommentsScreen = ({navigation,route})=> {
@@ -41,20 +42,27 @@ NoticeCommentsScreen = ({navigation,route})=> {
             comments.push({
                 ... documentSnapshot.data(),
                 key: documentSnapshot.id,
-            });            
+               
+            });  
+            console.log(documentSnapshot.data()+"The fucking data");          
         });
         setComments(comments);
     });
-    return () => subscriber();       
-},[])
+    return () => {
+                  subscriber();
+                  setComments('');
+    };       
+},[id])
 
+  const goback = ()=>{
+    navigation.goBack();
+   
+  }
 
   return (
     <>
-
       <View style={styles.header}>
-
-    <View style={{alignContent:"flex-start"}}>
+        <View style={{alignContent:"flex-start"}}>
 
     
                 <Icon.Button 
@@ -92,6 +100,23 @@ NoticeCommentsScreen = ({navigation,route})=> {
             </LinearGradient>
     )}
     />
+
+              <View style={{alignContent:"center",padding:'8%'}}>
+                <TouchableOpacity
+                            style={styles.signIn}
+                            onPress={goback}
+                        >
+                                <LinearGradient
+                                    colors={['#08d4c4', '#01ab9d']}
+                                    style={styles.signIn}
+                                    >
+                                    <Text    
+                                        style={[styles.textSign, {color:'#fff'}]}>
+                                                Back
+                                    </Text>
+                                </LinearGradient>
+                        </TouchableOpacity>
+                        </View>
     
     </View>
   </>
@@ -109,6 +134,18 @@ const styles = StyleSheet.create({
     fontSize: 26,
     backgroundColor:'#009387',
     flexDirection: "row",
+},
+signIn: {
+  padding: '5%',
+  width: '100%',
+  height: 50,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: 10
+},
+textSign: {
+  fontSize: 18,
+  fontWeight: 'bold'
 },
   container:{
     width:'100%',
